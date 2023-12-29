@@ -1,0 +1,79 @@
+﻿@page "/su-vu/y-te/suc-khoe-cong-dong/detail/{id?}"
+@using CharityClinic.Data.Model;
+@using CharityClinic.Pages.Admin;
+@using CharityClinic.Services;
+@using Microsoft.AspNetCore.Html;
+@inject IJSRuntime JS
+@inject IBaseService<SucKhoe> SucKhoesService;
+<section id="sp-breadcrumb-wrapper">
+    <div class="container">
+        <div class="row-fluid fadeInDown animated" id="breadcrumb" style="visibility: visible;">
+            <div id="sp-breadcrumb" class="span12">
+                <ul class="breadcrumb ">
+                    <li class="active"><span><i class="icon-map-marker hasTooltip" title="You are here: "></i></span></li>
+                    <li><a href="/" class="pathway">Home</a><span>/</span></li>
+                    <li><span>Sứ Vụ</span><span>/</span></li>
+                    <li><span>Y tế</span></li>
+                    <li><span>/</span><a href="/su-vu/y-te/suc-khoe-cong-dong" class="pathway"><span>Sức khoẻ cộng đồng</span></a></li>
+                    <li><span>/</span><span>@Title</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<header class="entry-header">
+    <div class="page-header">
+        <h1 class="entry-title">
+            <a href="#">
+                @Title
+            </a>
+        </h1>
+    </div>
+</header>
+<div class="entry-meta muted clearfix">
+    <time class="create-date" datetime="2023-11-17 09:29:47">
+        @TimeCreate
+    </time>
+</div>
+
+<section class="entry-content media">
+    <div id="content-content">
+        @((MarkupString)Content)
+    </div>
+</section>
+
+@code {
+    [Parameter]
+    public string? id { get; set; }
+    public SucKhoe? SucKhoes = new SucKhoe();
+    public string Content { get; set; }
+    public string Title { get; set; }
+    public DateTime TimeCreate { get; set; }
+
+    protected override async void OnInitialized()
+    {
+        try
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                SucKhoes = await SucKhoesService.Get(id);
+                if(SucKhoes == null)
+                {
+                    Content = "Id không tồn tại";
+                }
+                else
+                {
+                    Content = SucKhoes.Content;
+                    Title = SucKhoes.Title;
+                    TimeCreate = SucKhoes.TimeCreate;
+                }
+                StateHasChanged();
+            }
+        }
+        catch
+        {
+
+        }
+    }
+
+}

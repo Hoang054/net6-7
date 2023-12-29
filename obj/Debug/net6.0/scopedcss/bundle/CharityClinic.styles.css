@@ -1,0 +1,113 @@
+/* _content/CharityClinic/Shared/MainLayout.razor.rz.scp.css */
+.page[b-0a0lcvvd8l] {
+    position: relative;
+    display: flex;
+}
+
+main[b-0a0lcvvd8l] {
+    flex: 1;
+}
+
+.sidebar[b-0a0lcvvd8l] {
+    background: #3845bf;
+}
+
+.content[b-0a0lcvvd8l] {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+@media (max-width: 640.98px) {
+    .page[b-0a0lcvvd8l] {
+        flex-direction: column;
+    }
+
+    main[b-0a0lcvvd8l] {
+        width: 100%;
+    }
+}
+
+@media (min-width: 641px) {
+
+    .sidebar[b-0a0lcvvd8l] {
+        width: 250px;
+        min-width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    [b-0a0lcvvd8l] .top-menu, .content[b-0a0lcvvd8l] {
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+    }
+
+    main[b-0a0lcvvd8l] {
+        /*background-color: #F1F5FA;*/
+        width: calc(100% - 250px);
+    }
+}
+/* _content/CharityClinic/Shared/NavMenu.razor.rz.scp.css */
+.navbar-toggler[b-kuol1iywl7] {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.top-row[b-kuol1iywl7] {
+    height: 3.5rem;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.navbar-brand[b-kuol1iywl7] {
+    font-size: 1.1rem;
+}
+
+.oi[b-kuol1iywl7] {
+    width: 2rem;
+    font-size: 1.1rem;
+    vertical-align: text-top;
+    top: -2px;
+}
+
+.nav-item[b-kuol1iywl7] {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+    .nav-item:first-of-type[b-kuol1iywl7] {
+        padding-top: 1rem;
+    }
+
+    .nav-item:last-of-type[b-kuol1iywl7] {
+        padding-bottom: 1rem;
+    }
+
+    .nav-item[b-kuol1iywl7]  a {
+        color: #d7d7d7;
+        border-radius: 4px;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        line-height: 3rem;
+    }
+
+.nav-item[b-kuol1iywl7]  a.active {
+    background-color: rgba(255,255,255,0.25);
+    color: white;
+}
+
+.nav-item[b-kuol1iywl7]  a:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+@media (min-width: 641px) {
+    .navbar-toggler[b-kuol1iywl7] {
+        display: none;
+    }
+
+    .collapse[b-kuol1iywl7] {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+    }
+}

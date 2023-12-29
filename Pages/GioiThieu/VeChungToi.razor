@@ -1,0 +1,116 @@
+﻿@page "/gioi-thieu/ve-chung-toi"
+@using CharityClinic.Services;
+@inject IBaseService<CharityClinic.Data.Model.GioiThieu> gioiThieuService;
+
+<section id="sp-breadcrumb-wrapper">
+    <div class="container">
+        <div class="row-fluid fadeInDown animated" id="breadcrumb" style="visibility: visible;">
+            <div id="sp-breadcrumb" class="span12">
+                <ul class="breadcrumb ">
+                    <li class="active"><span><i class="icon-map-marker hasTooltip" title="You are here: "></i></span></li>
+                    <li><a href="/" class="pathway">Home</a><span>/</span></li>
+                    <li><span>Giới thiệu</span></li>
+                    <li><span>/</span><span>Về chúng tôi</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+                            <section id="sp-component-wrapper">
+                                <div id="sp-component">
+                                    <div id="system-message-container">
+                                    </div>
+                                    <article class="item-page post-45 post hentry status-publish category-gia-i-thia-u ">
+                                        <header class="entry-header">
+                                            <div class="page-header">
+                                                <h1 class="entry-title">
+                                                    <a href="/gioi-thieu/ve-chung-toi">
+                                                        @if (GioiThieus.Where(e => e.TitleId == 4).Count() > 0)
+                                                        {
+                                @GioiThieus.Where(e => e.TitleId == 4).FirstOrDefault().Title
+                                                        }
+                                                    </a>
+                                                </h1>
+                                            </div>
+                                        </header>
+                                        <section class="entry-content media">
+                                            <div id="vina_about_us">
+                                                <div class="blinker-testimonial">
+                                                    <div class="carousel slide" id="myCarousel">
+                                                        <div class="carousel-inner">
+                                @if (GioiThieus.Where(e => e.TitleId == 4).Count() > 0)
+                                {
+                                     @((MarkupString)@GioiThieus.Where(e => e.TitleId == 4).FirstOrDefault().Content)
+                                }
+                                                            @*<div class="item active">
+                                                                <div class="testimonial">
+                                                                    <img src="http://www.kimlongcharityclinic.org/vi/images/about-us/about_us_logo_2.png" alt=""><br>
+                                                                    <h3>Logo Phòng khám</h3>
+                                                                    <p class="sp-designation">Ý nghĩa Logo</p>
+                                                                    <p class="sp-designation" style="text-align: left;">• Chữ thập đỏ biểu tượng của hoạt động ngành y tế - nhân đạo<br>• Chữ thập đỏ được đặt trong hình trái tim tượng trưng của Tình Yêu<br>• “Yêu thương mọi người” là châm ngôn của Đấng Sáng Lập Hội dòng Con Đức Mẹ Vô Nhiễm, là tôn chỉ phục vụ của Phòng khám.</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="item">
+                                                                <div class="testimonial"><img src="http://www.kimlongcharityclinic.org/vi/images/about-us/about_us_martino.jpg" alt=""></div>
+                                                                <div class="testimonial">&nbsp;</div>
+                                                                <div class="testimonial">
+                                                                    Thánh Martinô thành Tours - Bổn Mạng Phòng Khám<br>
+                                                                    <h3>Tôn chỉ hoạt động</h3>
+                                                                    <p class="sp-designation">[ Matthêu 25, 40 ]</p>
+                                                                    <p class="sp-designation">“Mỗi lần các con làm như thế cho một trong những anh em bé nhỏ nhất của Ta đây, các con đã làm cho chính Ta"</p>
+                                                                </div>
+                                                            </div>*@
+                                                        </div>
+                                                        <a class="carousel-control left" href="#myCarousel" data-slide="prev">‹</a><a class="carousel-control right" href="#myCarousel" data-slide="next">›</a>
+                                                    </div>
+                                                </div>
+                                                <div class="row-fluid about_us_header fadeInDown animated" style="visibility: visible;">
+                                                    <div class=" span8">
+                            @if (GioiThieus.Where(e => e.TitleId == 5).Count() > 0)
+                            {
+                                <h3>@GioiThieus.Where(e => e.TitleId == 5).FirstOrDefault().Title</h3>
+                                 @((MarkupString)@GioiThieus.Where(e => e.TitleId == 5).FirstOrDefault().Content)
+                            }
+                                                        
+                                                    </div>
+                                                    <div class=" span4">
+                                                        <p></p>
+                                                        <h3>Nền tảng Giá trị</h3>
+                                                        <p></p>
+                                @for(int i = 6; i < 9; i++)
+                                {
+                                    @if (GioiThieus.Where(e => e.TitleId == i).Count() > 0)
+                                    {
+                                                        <div class="sp-bubble " style="background:#736357;padding:10px;border:0">
+                                                            @((MarkupString)@GioiThieus.Where(e => e.TitleId == i).FirstOrDefault().Content)
+                                                            <cite>
+                                                                <span style="border:15px solid #736357"></span><strong style="padding-left: 36Px;">@GioiThieus.Where(e => e.TitleId == i).FirstOrDefault().Title</strong>
+                                                            </cite>
+                                                        </div>
+                                    }
+                                }
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
+                                                <p></p>
+                                            </div>
+                                        </section>
+                                    </article>
+                                </div>
+                            </section>
+
+@code {
+    public List<CharityClinic.Data.Model.GioiThieu> GioiThieus = new List<CharityClinic.Data.Model.GioiThieu>();
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            GioiThieus = (await gioiThieuService.GetAll()).ToList();
+            StateHasChanged();
+        }
+        catch
+        {
+
+        }
+    }
+}

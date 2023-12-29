@@ -1,0 +1,301 @@
+﻿@page "/admin/suc-khoe-cong-dong/{id?}"
+
+@layout AdminLayout
+@using CharityClinic.Services;
+@using CharityClinic.Data.Model;
+@using System.Web.Helpers;
+@inject IBaseService<SucKhoe> SucKhoeService
+@inject IJSRuntime JS
+@inject ILogger<SucKhoeMucVuAdmin> Logger
+@inject IHostEnvironment Environment
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <div class="col-12" style="color: limegreen;">
+        @message
+    </div>
+}else{
+@if (string.IsNullOrEmpty(id))
+{
+    <h3>Create sức khoẻ cộng đồng</h3>
+}
+else
+{
+    <h3>Update sức khoẻ cộng đồng</h3>
+    
+}
+<form action="javascript:void(0);">
+    @if (SucKhoe.Content == "")
+    {
+        <div class="col-12" style="color: red;">
+            The Content field is required.
+        </div>
+    }
+    @if (SucKhoe.Title == "")
+    {
+        <div class="col-12" style="color: red;">
+            The Tiltle field is required.
+        </div>
+    }
+    @if (imagePath == "")
+    {
+        <div class="col-12" style="color: red;">
+            The Image field is required.
+        </div>
+    }
+    @if (successCreate > 0 && string.IsNullOrEmpty(id))
+    {
+        <div class="col-12" style="color: limegreen;">
+            Tạo sức khoẻ cộng đồng thành công.
+        </div>
+    }
+    else if (successCreate > 0 && !string.IsNullOrEmpty(id))
+    {
+        <div class="col-12" style="color: limegreen;">
+            Update sức khoẻ cộng đồng thành công.
+        </div>
+    }
+    <div class="form-group">
+        <label>Title</label>
+        <input @bind="SucKhoe.Title" class="form-control" />
+        <label>Image</label>
+        @*<input accept="image/*" type='file' id="file-input" />*@
+
+        @if (errorMaxSize)
+        {
+            <div class="col-12" style="color: red;">
+                The Image too large.
+            </div>
+        }
+        <InputFile OnChange="@LoadFiles" id="file-input" accept="image/*" class="form-control" />
+        <div class="result">
+            <img id="img-preview" src="@imagePath" alt="image" style="height: 200px;"/>
+        </div>
+        <label>Content</label>
+        <textarea id="Content" @bind="SucKhoe.Content" class="form-control" />
+        <span asp-validation-for="Content"></span>
+    </div>
+
+        @if (string.IsNullOrEmpty(id))
+        {
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled="@IsDisabled" @onclick="CreateNews">
+                @if (IsDisabled)
+                {
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                }
+                Create
+            </button>
+        }
+        else
+        {
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled="@IsDisabled" @onclick="CreateNews">
+                @if (IsDisabled)
+                {
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                }
+                Update
+            </button>
+        }
+    </form>
+}
+@*</EditForm>*@
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Thông báo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if (IsDisabled)
+                {
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                }
+                else
+                {
+                    @if (successCreate > 0 && string.IsNullOrEmpty(id))
+                    {
+                        <div class="col-12" style="color: limegreen;">
+                            Tạo thành công.
+                        </div>
+                    }
+                    else if (successCreate > 0 && !string.IsNullOrEmpty(id))
+                    {
+                        <div class="col-12" style="color: limegreen;">
+                            Update thành công.
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-12" style="color: red;">
+                            Update or Create không thành công.
+                        </div>
+                    }
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+    [Parameter]
+    public string? id { get; set; }
+    private SucKhoe SucKhoe = new();
+    private int successCreate = 0;
+    private string imagePath = null;
+    private string message = "";
+    public bool IsDisabled { get; set; }
+
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("import", "./js/admin/tinymce.min.js");
+            if (!string.IsNullOrEmpty(id))
+            {
+                var path = Path.Combine("SucKhoeContent", id);
+                await JS.InvokeVoidAsync("init", path);
+
+            }
+            else
+            {
+                var ChamSoc = (await SucKhoeService.GetAll());
+                var nextId = 1;
+                if (ChamSoc.Count() > 0)
+                    nextId = ChamSoc.OrderByDescending(d => d.Id).FirstOrDefault().Id + 1;
+                var path = Path.Combine("SucKhoeContent", nextId.ToString());
+                await JS.InvokeVoidAsync("init", path);
+
+            }
+            await JS.InvokeVoidAsync("LoadImage");
+            if (!string.IsNullOrEmpty(id))
+            {
+                SucKhoe = await SucKhoeService.Get(id);
+                if(SucKhoe != null)
+                {
+                    imagePath = SucKhoe.PathImg;
+                    if (!string.IsNullOrEmpty(SucKhoe.Content))
+                        await JS.InvokeAsync<string>("setContent", SucKhoe.Content);
+                    
+                }
+                else
+                {
+                    message = "Id không tồn tại";
+                }
+                StateHasChanged();
+            }
+        }
+        catch
+        {
+
+        }
+    }
+    private async Task CreateNews()
+    {
+        try
+        {
+            IsDisabled = true;
+            SucKhoe.Id = 0;
+            SucKhoe.Content = await JS.InvokeAsync<string>("getContent", null);
+            SucKhoe.PathImg = imagePath;
+            if (string.IsNullOrEmpty(SucKhoe.Title))
+            {
+                SucKhoe.Title = "";
+            }
+            if (string.IsNullOrEmpty(imagePath))
+            {
+                imagePath = "";
+            }
+
+            if (!string.IsNullOrEmpty(SucKhoe.Content) && !string.IsNullOrEmpty(SucKhoe.Title) && !string.IsNullOrEmpty(imagePath))
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    SucKhoe.TimeCreate = DateTime.Now;
+                    successCreate = await SucKhoeService.Create(SucKhoe);
+                }
+                else
+                {
+                    SucKhoe.Id = int.Parse(id);
+                    successCreate = await SucKhoeService.Update(SucKhoe);
+                }
+            }
+            IsDisabled = false;
+            StateHasChanged();
+        }
+        catch(Exception e)
+        {
+
+        }
+    }
+    private List<IBrowserFile> loadedFiles = new();
+    private int maxAllowedFiles = 1;
+    private long maxFileSize = 10 * 1024 * 1024;
+    private bool errorMaxSize = false;
+
+    private async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        errorMaxSize = false;
+        loadedFiles.Clear();
+        try
+        {
+            foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
+            {
+                var trustedFileNameForFileStorage = Path.GetRandomFileName();
+                var path = Path.Combine(Environment.ContentRootPath, "wwwroot", "SucKhoe");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                try
+                {
+                    if (!string.IsNullOrEmpty(id))
+                    {
+                        if (File.Exists(Path.Combine(path, id + ".jpg")))
+                        {
+                            File.Delete(Path.Combine(path, id + ".jpg"));
+                        }
+                        await using FileStream fs = new(Path.Combine(path, id + ".jpg"), FileMode.Create);
+                        imagePath = Path.Combine("\\SucKhoe", id + ".jpg");
+                        await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+                        loadedFiles.Add(file);
+                        fs.Close();
+                    }
+                    else
+                    {
+                        var SucKhoe = (await SucKhoeService.GetAll());
+                        var nextId = 1;
+                        if(SucKhoe.Count() > 0)
+                            nextId = SucKhoe.OrderByDescending(d => d.Id).FirstOrDefault().Id + 1;
+                        if (File.Exists(Path.Combine(path, nextId + ".jpg")))
+                        {
+                            File.Delete(Path.Combine(path, nextId + ".jpg"));
+                        }
+                        await using FileStream fs = new(Path.Combine(path, nextId + ".jpg"), FileMode.Create);
+                        imagePath = Path.Combine("\\SucKhoe", nextId + ".jpg");
+                        await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+                        loadedFiles.Add(file);
+                        fs.Close();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    errorMaxSize = true;
+                    imagePath = "";
+                    Logger.LogError("File: {Filename} Error: {Error}",
+                        file.Name, ex.Message);
+                    StateHasChanged();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            
+            throw;
+        }
+
+    }
+}

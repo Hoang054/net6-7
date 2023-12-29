@@ -1,0 +1,189 @@
+﻿@inherits LayoutComponentBase
+@inject IJSRuntime JS
+
+<div class="row-offcanvas row-offcanvas-left">
+	<div style="span12">
+        <header id="sp-header-wrapper" style="position: static;">
+            <Header />
+        </header>
+        <section id="sp-main-body-wrapper" class=" ">
+            <div class="container">
+                <div class="row-fluid fadeInDown animated" id="main-body" style="visibility: visible;">
+                    <div id="sp-message-area" class="span12">
+                        <section id="sp-component-area-wrapper" class=" ">
+                            <div class="row-fluid fadeInDown animated" id="component-area" style="visibility: visible;">
+                                <div id="sp-component-area" class="span12">
+                                    <section id="sp-component-wrapper">
+                                        <div id="sp-component">
+                                            <div id="system-message-container">
+                                            </div>
+                                            <article class="item-page post-133 post hentry status-publish category-tin-tuc-phong-kham ">
+                                                @Body
+                                            </article>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <FooterPage/>
+    </div>
+    <div class="hidden-desktop sp-mobile-menu nav-collapse collapse sidebar-offcanvas" style="height: 625px; z-index: 1000; top: 110px;">
+        <button type="button" class="hidden-desktop btn btn-primary vina-menu-small" data-toggle="offcanvas" >
+            <i class="fa fa-remove"></i>
+        </button>
+        <ul class="" style="overflow: auto;height: 100vh;">
+            <li class="menu-item active first">
+                <a href="#" class="menu-item active first">
+                    <span class="menu"><span class="menu-title">Trang Chủ</span></span>
+                </a>
+            </li>
+            <li class="menu-item parent">
+                <div class="nav-item">
+                    <a class="nav-link dropdown-toggle" id="gioithieu" data-bs-toggle="dropdown" aria-expanded="false" href="javascript:void(0)">
+                        Giới Thiệu
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="gioithieu">
+                        <li class="menu-item first">
+                            <a href="/gioi-thieu/ve-chung-toi" class="menu-item first dropdown-item"><span class="menu"><span class="menu-title">Về chúng tôi</span></span></a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="/gioi-thieu/lich-su" class="menu-item dropdown-item">
+                                <span class="menu"><span class="menu-title">Lịch sử</span></span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-item dropdown-item">
+                                <span class="menu">
+                                    <span class="menu-title">Tầm nhìn</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="/gioi-thieu/su-mang" class="menu-item dropdown-item">
+                                <span class="menu"><span class="menu-title">Sứ mạng</span></span>
+                            </a>
+                        </li>
+                        <li class="menu-item last">
+                            <a href="/gioi-thieu/lia-n-ha" class="menu-item last dropdown-item">
+                                <span class="menu"><span class="menu-title">Liên hệ</span></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </li>
+            <li class="menu-item parent">
+                <div class="nav-item">
+                    <a class="nav-link dropdown-toggle" id="suvu" data-bs-toggle="dropdown" aria-expanded="false" href="javascript:void(0)">
+                        Sứ Vụ
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="suvu">
+                        <li class="menu-item first parent dropdown-item">
+                            <a href="#" class="menu-item first parent">
+                                <span class="menu"><span class="menu-title">Y tế</span></span>
+                            </a>
+                            <span class="sp-menu-toggler collapsed" data-toggle="collapse" data-target=".collapse-106">
+                                <i class="icon-angle-right"></i><i class="icon-angle-down"></i>
+                            </span>
+                            <ul class="collapse collapse-106" style="display: list-item;">
+                                <li class="menu-item first">
+                                    <a href="/su-vu/y-te/kham-chua-benh" class="menu-item first">
+                                        <span class="menu"><span class="menu-title">Khám chữa bệnh</span></span>
+                                    </a>
+                                </li>
+                                <li class="menu-item last">
+                                    <a href="/su-vu/y-te/suc-khoe-cong-dong" class="menu-item last">
+                                        <span class="menu"><span class="menu-title">Sức khoẻ cộng đồng</span></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu-item last parent dropdown-item">
+                            <a href="#" class="menu-item last parent">
+                                <span class="menu">
+                                    <span class="menu-title">Hổ trợ cộng đồng</span>
+                                </span>
+                            </a>
+                            <span class="sp-menu-toggler collapsed" data-toggle="collapse" data-target=".collapse-108">
+                                <i class="icon-angle-right"></i><i class="icon-angle-down"></i>
+                            </span>
+                            <ul class="collapse collapse-108" style="display: list-item;">
+                                <li class="menu-item first">
+                                    <a href="/su-vu/ho-tro-cong-dong/cham-soc-muc-vu" class="menu-item first">
+                                        <span class="menu"><span class="menu-title">Chăm sóc mục vụ</span></span>
+                                    </a>
+                                </li>
+                                <li class="menu-item last">
+                                    <a href="/su-vu/ho-tro-cong-dong/nguoi-ben-le" class="menu-item last">
+                                        <span class="menu"><span class="menu-title">Người bên lề</span></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="menu-item parent">
+                <a href="#" class="menu-item parent">
+                    <span class="menu">
+                        <span class="menu-title">Bản tin</span>
+                    </span>
+                </a>
+                <span class="sp-menu-toggler collapsed" data-toggle="collapse" data-target=".collapse-123">
+                    <i class="icon-angle-right"></i><i class="icon-angle-down"></i>
+                </span>
+                <ul class="collapse collapse-123" style="display: list-item;">
+                    <li class="menu-item first">
+                        <a href="/ban-tin/tin-phong-kham/page/1" class="menu-item first">
+                            <span class="menu"><span class="menu-title">Tin Phòng Khám</span></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-item parent">
+                <a href="#" class="menu-item parent"><span class="menu"><span class="menu-title">Thư Viện</span></span></a>
+                <span class="sp-menu-toggler collapsed" data-toggle="collapse" data-target=".collapse-181">
+                    <i class="icon-angle-right"></i>
+                    <i class="icon-angle-down"></i>
+                </span>
+                <ul class="collapse collapse-181" style="display: list-item;">
+                    <li class="menu-item first">
+                        <a href="/thu-vien/hinh-anh" class="menu-item first">
+                            <span class="menu"><span class="menu-title">Hình ảnh</span></span>
+                        </a>
+                    </li>
+                    <li class="menu-item last">
+                        <a href="/thu-vien/video" class="menu-item last"><span class="menu"><span class="menu-title">Video</span></span></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-item"><a href="gioi-thieu/lia-n-ha" class="menu-item"><span class="menu"><span class="menu-title">Liên hệ</span></span></a></li>
+            <li class="menu-item last"><a href="#" class="menu-item last"><span class="menu"><span class="menu-title">Quyên góp</span></span></a></li>
+        </ul>
+    </div>
+</div>
+@code {
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            //await JS.InvokeVoidAsync("import", "./css/bootstrap/bootstrap.min.css");
+            await JS.InvokeVoidAsync("import", "./js/admin/tinymce.min.js");
+            await JS.InvokeVoidAsync("import", "./js/jquery-3.7.1.min.js");
+            await JS.InvokeVoidAsync("import", "./js/bootstrap.min.js");
+            await JS.InvokeVoidAsync("import", "./js/script.js");
+            await JS.InvokeVoidAsync("import", "./js/menu.js");
+            await JS.InvokeVoidAsync("spnoConflict", null);
+            await JS.InvokeVoidAsync("changeMainLayout");
+        }
+        catch
+        {
+
+        }
+    }
+}

@@ -1,0 +1,133 @@
+﻿@page "/admin/video/{id?}"
+
+@layout AdminLayout
+@using CharityClinic.Services;
+@using CharityClinic.Data.Model;
+@using System.Web.Helpers;
+@inject IBaseService<Video> VideoService
+@inject IJSRuntime JS
+@inject ILogger<VideoAdmin> Logger
+@inject IHostEnvironment Environment
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <div class="col-12" style="color: limegreen;">
+        @message
+    </div>
+}else{
+@if (string.IsNullOrEmpty(id))
+{
+    <h3>Create Video</h3>
+}
+else
+{
+    <h3>Update Video</h3>
+}
+<form action="javascript:void(0);">
+    @if (Video.Title == "")
+    {
+        <div class="col-12" style="color: red;">
+            The Tiltle field is required.
+        </div>
+    }
+    @if (Video.LinkYouTube == "")
+    {
+        <div class="col-12" style="color: red;">
+            The Link field is required.
+        </div>
+    }
+    @if (successCreate > 0 && string.IsNullOrEmpty(id))
+    {
+        <div class="col-12" style="color: limegreen;">
+            Tạo Video thành công.
+        </div>
+    }
+    else if (successCreate > 0 && !string.IsNullOrEmpty(id))
+    {
+        <div class="col-12" style="color: limegreen;">
+            Update Video thành công.
+        </div>
+    }
+    <div class="form-group">
+        <label>Title</label>
+        <input @bind="Video.Title" class="form-control" />
+
+        <label>Link</label>
+        <input @bind="Video.LinkYouTube" class="form-control" />
+    </div>
+
+        @if(string.IsNullOrEmpty(id))
+        {
+            <button class="btn btn-primary" @onclick="CreateNews">
+                Create
+            </button>
+        }
+        else
+        {
+            <button class="btn btn-primary" @onclick="CreateNews">
+                Update
+            </button>
+        }
+    </form>}
+@*</EditForm>*@
+@code {
+    [Parameter]
+    public string? id { get; set; }
+    private Video Video = new();
+    private int successCreate = 0;
+    private string message = "";
+
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                Video = await VideoService.Get(id);
+                if(Video == null)
+                {
+                    message = "Id không tồn tại";
+                }
+                StateHasChanged();
+            }
+        }
+        catch
+        {
+
+        }
+    }
+    private async Task CreateNews()
+    {
+        try
+        {
+            Video.Id = 0;
+            if (string.IsNullOrEmpty(Video.Title))
+            {
+                Video.Title = "";
+            }
+            if (string.IsNullOrEmpty(Video.LinkYouTube))
+            {
+                Video.LinkYouTube = "";
+            }
+
+            if (!string.IsNullOrEmpty(Video.Title) && !string.IsNullOrEmpty(Video.LinkYouTube))
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    Video.TimeCreate = DateTime.Now;
+                    successCreate = await VideoService.Create(Video);
+                }
+                else
+                {
+                    Video.Id = int.Parse(id);
+                    successCreate = await VideoService.Update(Video);
+                }
+            }
+            StateHasChanged();
+        }
+        catch(Exception e)
+        {
+
+        }
+    }
+}

@@ -1,0 +1,165 @@
+﻿@page "/admin/gioi-thieu/{id}"
+
+@layout AdminLayout
+@using CharityClinic.Services;
+@using CharityClinic.Data.Model;
+@using System.Web.Helpers;
+@inject IBaseService<GioiThieu> GioiThieuService
+@inject IJSRuntime JS
+@inject IHostEnvironment Environment
+
+@if (string.IsNullOrEmpty(id) || (int.Parse(id) < 4 && int.Parse(id) > 13))
+{
+    <h3>Không tìm thấy giới thiệu</h3>
+
+}
+else
+{
+    <h3>Update giới thiệu</h3>
+
+    <form action="javascript:void(0);">
+        @if (GioiThieu != null)
+        {
+            @if (GioiThieu.Content == "")
+            {
+                <div class="col-12" style="color: red;">
+                    The Content field is required.
+                </div>
+            }
+            @if (GioiThieu.Title == "")
+            {
+                <div class="col-12" style="color: red;">
+                    The Tiltle field is required.
+                </div>
+            }
+        }
+        @if (successCreate > 0)
+        {
+            <div class="col-12" style="color: limegreen;">
+                Update giới thiệu thành công.
+            </div>
+        }
+        <div class="form-group">
+            <label>Title</label>
+            <input @bind="GioiThieu.Title" class="form-control" />
+
+            <label>Content</label>
+            <textarea id="Content" @bind="GioiThieu.Content" class="form-control" />
+            <span asp-validation-for="Content"></span>
+        </div>
+
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled="@IsDisabled" @onclick="CreateNews">
+            @if (IsDisabled)
+            {
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            }
+            Update
+        </button>
+
+    </form>
+}
+@*</EditForm>*@
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Thông báo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if (IsDisabled)
+                {
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                }
+                else
+                {
+                    @if (successCreate > 0)
+                    {
+                        <div class="col-12" style="color: limegreen;">
+                            Update thành công.
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-12" style="color: red;">
+                            Update không thành công.
+                        </div>
+                    }
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string? id { get; set; }
+    private GioiThieu GioiThieu = new GioiThieu();
+    private int successCreate = 0;
+    public bool IsDisabled { get; set; }
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("import", "./js/admin/tinymce.min.js");
+            var path = Path.Combine("GioiThieuContent", id);
+            await JS.InvokeVoidAsync("init", path);
+
+            GioiThieu = await GioiThieuService.Get(id);
+            if (GioiThieu != null)
+            {
+                if (!string.IsNullOrEmpty(GioiThieu.Content))
+                {
+                    await JS.InvokeAsync<string>("setContent", GioiThieu.Content);
+                }
+                StateHasChanged();
+            }
+            else
+            {
+                GioiThieu = new GioiThieu();
+            }
+
+        }
+        catch
+        {
+
+        }
+    }
+    private async Task CreateNews()
+    {
+        try
+        {
+            IsDisabled = true;
+            GioiThieu.TitleId = int.Parse(id);
+            GioiThieu.Content = await JS.InvokeAsync<string>("getContent", null);
+            if (string.IsNullOrEmpty(GioiThieu.Title))
+            {
+                GioiThieu.Title = "";
+            }
+
+            if (!string.IsNullOrEmpty(GioiThieu.Content) && !string.IsNullOrEmpty(GioiThieu.Title))
+            {
+                var gioiThieu = await GioiThieuService.Get(id);
+                if (gioiThieu == null)
+                {
+                    GioiThieu.TimeCreate = DateTime.Now;
+                    successCreate = await GioiThieuService.Create(GioiThieu);
+                }
+                else
+                {
+                    successCreate = await GioiThieuService.Update(GioiThieu);
+                }
+            }
+            IsDisabled = false;
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
+
+}

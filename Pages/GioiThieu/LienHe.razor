@@ -1,0 +1,192 @@
+﻿@page "/gioi-thieu/lia-n-ha"
+@using CharityClinic.Services;
+@inject IBaseService<CharityClinic.Data.Model.GioiThieu> gioiThieuService;
+
+<section id="sp-breadcrumb-wrapper">
+    <div class="container">
+        <div class="row-fluid fadeInDown animated" id="breadcrumb" style="visibility: visible;">
+            <div id="sp-breadcrumb" class="span12">
+                <ul class="breadcrumb ">
+                    <li class="active"><span><i class="fa fa-home" title="You are here: "></i></span></li>
+                    <li><a href="/" class="pathway">Home</a><span>/</span></li>
+                    <li><span>Giới Thiệu</span></li>
+                    <li><span>/</span><span>Liên hệ</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+                <section id="sp-component-area-wrapper" class=" ">
+                    <div class="row-fluid fadeInDown animated" id="component-area" style="visibility: visible;">
+                        <div id="sp-component-area" class="span12">
+                            <section id="sp-component-wrapper">
+                                <div id="sp-component">
+                                    <div id="system-message-container">
+                                    </div>
+                                    <div class="contact">
+                                        <div class="page-header">
+                                            <h2 class="page-header color">
+                                                <span class="contact-name">Contact Name</span>
+                                            </h2>
+                                            <div class="modhdg1 line">
+                                                <div class="modhdg2 line"></div>
+                                            </div>
+                                        </div>
+                                        <div id="slide-contact" class="accordion">
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading"><strong><a href="#basic-details" data-toggle="collapse" class="accordion-toggle">Contact</a></strong></div>
+                                                <div class="accordion-body collapse in" id="basic-details">
+                                                    <div class="accordion-inner">
+                                                        <div class="contact-address-block">
+                                                            <h4>Position</h4>
+                                                            <div class="contact-address">
+                                                                <div class="media">
+                                                                    <div class="pull-left">
+                                                                        <i class="fa fa-home"></i>
+                                                        @if (GioiThieus.Where(e => e.TitleId == 10).Count() > 0)
+                                                        {
+                                                            @((MarkupString)@GioiThieus.Where(e => e.TitleId == 10).FirstOrDefault().Content)
+                                                        }
+                                                                    </div>
+                                                                    @*<div class="media-body">
+                                                                        <span class="contact-street">
+                                                                            Street Address
+                                                                        </span>
+                                                                        <span class="contact-suburb">
+                                                                            Suburb
+                                                                        </span>
+                                                                        <span class="contact-state">
+                                                                            State
+                                                                        </span>
+                                                                        <span class="contact-postcode">
+                                                                            Zip Code
+                                                                        </span>
+                                                                        <span class="contact-country">
+                                                                            Country
+                                                                        </span>
+                                                                    </div>*@
+                                                                </div>
+                                                            </div>
+                                                            <div class="contact-contactinfo">
+                                                                <div class="media">
+                                                                    <div class="pull-left">
+                                                        <i class="fa fa-phone"></i>@if (GioiThieus.Where(e => e.TitleId == 11).Count() > 0)
+                                                        {
+                                                            @((MarkupString)@GioiThieus.Where(e => e.TitleId == 11).FirstOrDefault().Content)
+                                                        }
+                                                                    </div>
+                                                                    <div class="media-body contact-telephone">
+                                                                        Telephone
+                                                                    </div>
+                                                                </div>
+                                                                <div class="media">
+                                                                    <div class="pull-left">
+                                                        <i class="fa fa-fax"></i>@if (GioiThieus.Where(e => e.TitleId == 12).Count() > 0)
+                                                        {
+                                                            @((MarkupString)@GioiThieus.Where(e => e.TitleId == 12).FirstOrDefault().Content)
+                                                        }
+                                                                    </div>
+                                                                    <div class="media-body contact-fax">
+                                                                        Fax
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading"><strong><a href="#display-form" data-toggle="collapse" class="accordion-toggle collapsed">Contact Form</a></strong></div>
+                                                <div class="accordion-body collapse" id="display-form">
+                                                    <div class="accordion-inner">
+                                                        <div class="contact-form">
+                                                            <form id="contact-form" action="/gioi-thieu/lia-n-ha" method="post" class="form-validate form-horizontal">
+                                                                <fieldset>
+                                                                    <legend>Send an Email. All fields with an asterisk (*) are required.</legend>
+                                                                    <div class="control-group">
+                                                                        <div class="control-label">
+                                                                            <label id="jform_contact_name-lbl" for="jform_contact_name" class="hasPopover required" title="" data-content="Your name." data-original-title="Name">
+                                                                                Name<span class="star">&nbsp;*</span>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="controls"><input type="text" name="jform[contact_name]" id="jform_contact_name" value="" class="required" size="30" required="required" aria-required="true"></div>
+                                                                    </div>
+                                                                    <div class="control-group">
+                                                                        <div class="control-label">
+                                                                            <label id="jform_contact_email-lbl" for="jform_contact_email" class="hasPopover required" title="" data-content="Email Address for contact." data-original-title="Email">
+                                                                                Email<span class="star">&nbsp;*</span>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="controls"><input type="email" name="jform[contact_email]" class="validate-email required" id="jform_contact_email" value="" size="30" autocomplete="email" required="required" aria-required="true"></div>
+                                                                    </div>
+                                                                    <div class="control-group">
+                                                                        <div class="control-label">
+                                                                            <label id="jform_contact_emailmsg-lbl" for="jform_contact_emailmsg" class="hasPopover required" title="" data-content="Enter the subject of your message here." data-original-title="Subject">
+                                                                                Subject<span class="star">&nbsp;*</span>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="controls"><input type="text" name="jform[contact_subject]" id="jform_contact_emailmsg" value="" class="required" size="60" required="required" aria-required="true"></div>
+                                                                    </div>
+                                                                    <div class="control-group">
+                                                                        <div class="control-label">
+                                                                            <label id="jform_contact_message-lbl" for="jform_contact_message" class="hasPopover required" title="" data-content="Enter your message here." data-original-title="Message">
+                                                                                Message<span class="star">&nbsp;*</span>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="controls"><textarea name="jform[contact_message]" id="jform_contact_message" cols="50" rows="10" class="required" required="required" aria-required="true"></textarea></div>
+                                                                    </div>
+                                                                    <div class="control-group">
+                                                                        <div class="control-label">
+                                                                            <label id="jform_contact_email_copy-lbl" for="jform_contact_email_copy" class="hasPopover" title="" data-content="Sends a copy of the message to the address you have supplied." data-original-title="Send a copy to yourself">
+                                                                                Send a copy to yourself
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="controls"><input type="checkbox" name="jform[contact_email_copy]" id="jform_contact_email_copy" value="1"></div>
+                                                                    </div>
+                                                                    <div class="form-actions">
+                                                                        <button class="vina-button" type="submit">Send Email</button>
+                                                                        <input type="hidden" name="option" value="com_contact">
+                                                                        <input type="hidden" name="task" value="contact.submit">
+                                                                        <input type="hidden" name="return" value="">
+                                                                        <input type="hidden" name="id" value="1:name">
+                                                                        <input type="hidden" name="73243bda55a891033079e52f97184284" value="1">
+                                                                    </div>
+                                                                </fieldset>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading"><strong><a href="#display-misc" data-toggle="collapse" class="accordion-toggle collapsed">Miscellaneous Information</a></strong></div>
+                                                <div class="accordion-body collapse" id="display-misc">
+                                                    <div class="accordion-inner">
+                                                        <div class="contact-miscinfo">
+                                                            <p>Information about or by the contact.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </section>
+
+@code {
+    public List<CharityClinic.Data.Model.GioiThieu> GioiThieus = new List<CharityClinic.Data.Model.GioiThieu>();
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            GioiThieus = (await gioiThieuService.GetAll()).ToList();
+            StateHasChanged();
+        }
+        catch
+        {
+
+        }
+    }
+}

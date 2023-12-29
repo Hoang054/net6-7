@@ -1,0 +1,150 @@
+﻿@page "/thu-vien/hinh-anh/{number?}"
+@using CharityClinic.Data.Model;
+@using CharityClinic.Services;
+@inject IJSRuntime JS
+@inject IBaseService<DanhMucImage> DanhMucImagesService;
+
+<section id="sp-breadcrumb-wrapper">
+    <div class="container">
+        <div class="row-fluid fadeInDown animated" id="breadcrumb" style="visibility: visible;">
+            <div id="sp-breadcrumb" class="span12">
+                <ul class="breadcrumb ">
+                    <li class="active"><span><i class="icon-map-marker hasTooltip" title="You are here: "></i></span></li>
+                    <li><a href="/vi/" class="pathway">Home</a><span>/</span></li>
+                    <li><span>Thư Viện</span></li>
+                    <li><span>/</span><span>Hình ảnh</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+                <section id="sp-component-area-wrapper" class=" ">
+                    <div class="row-fluid fadeInDown animated" id="component-area" style="visibility: visible;">
+                        <div id="sp-component-area" class="span12">
+                            <section id="sp-component-wrapper">
+                                <div id="sp-component">
+                                    <div id="system-message-container">
+                                    </div>
+                                    <div id="phocagallery" class="pg-categories-view pg-csv">
+                                        <section class="category-desc media">
+                                            <div class="page-header">
+                                                <h1>
+                                                    Hình Ảnh
+                                                </h1>
+                                            </div>
+                                        </section>
+                                        @for (int i = 0; i < DanhMucImages.Count; i++)
+                                        {
+                                            <div class="items-row cols-2 row-0 row-fluid clearfix fadeInDown animated" style="visibility: visible;">
+                                                <div class="span6">
+                                                    <div class="item column-1">
+                                                        <article class="post-119 post hentry status-publish category-tin-tuc-phong-kham">
+                                                            <header class="entry-header">
+                                                                <h2 class="entry-title">
+                                                                    <a href="/thu-vien/hinh-anhs/@DanhMucImages[i].Id" rel="bookmark" title="NỐI KẾT">
+                                                                        @DanhMucImages[i].Title
+                                                                    </a>
+                                                                </h2>
+                                                            </header>
+                                                            <div class="entry-meta muted clearfix">
+                                                                <time class="create-date" datetime="2023-10-13 10:21:32">
+                                                                    <i class="icon-time"></i>
+                                                                    @DanhMucImages[i].TimeCreate
+                                                                </time>
+                                                            </div>
+                                                            <section class="entry-content media">
+                                                                <div class="pull-left">
+                                                                    <img class="introtext-image" src="@DanhMucImages[i].PathImg" alt="">
+                                                                </div>
+                                                                <a class="vina-readmore" href="/thu-vien/hinh-anhs/@DanhMucImages[i].Id">
+                                                                    Read more ...
+                                                                </a>
+                                                            </section>
+                                                            <footer class="entry-meta">
+                                                            </footer>
+                                                        </article>
+                                                    </div>
+                                                    <!-- end item -->
+                                                </div>
+                                                @if (i != DanhMucImages.Count - 1)
+                                                {
+                                                    { i++; }
+                                                    <!-- end span -->
+                                                    <div class="span6">
+                                                        <div class="item column-2">
+                                                            <article class="post-117 post hentry status-publish category-tin-tuc-phong-kham">
+                                                                <header class="entry-header">
+                                                                    <h2 class="entry-title">
+                                                                        <a href="/thu-vien/hinh-anhs/@DanhMucImages[i].Id" rel="bookmark" title="NỐI KẾT">
+                                                                            @DanhMucImages[i].Title
+                                                                        </a>
+                                                                    </h2>
+                                                                </header>
+                                                                <div class="entry-meta muted clearfix">
+                                                                    <time class="create-date" datetime="2023-10-01 02:51:10">
+                                                                        <i class="icon-time"></i>
+                                                                        @DanhMucImages[i].TimeCreate
+                                                                    </time>
+                                                                </div>
+                                                                <section class="entry-content media">
+                                                                    <div class="pull-left">
+                                                                        <img class="introtext-image" src="@DanhMucImages[i].PathImg" alt="">
+                                                                    </div>
+                                                                    <a class="vina-readmore" href="/thu-vien/hinh-anhs/@DanhMucImages[i].Id">
+                                                                        Read more ...
+                                                                    </a>
+                                                                </section>
+                                                                <footer class="entry-meta">
+                                                                </footer>
+                                                            </article>
+                                                        </div>
+                                                        <!-- end item -->
+                                                    </div>
+                                                    <!-- end span -->
+                                                }
+                                            </div>
+                                            <!-- end row -->
+                                        }
+                                        <div class="pagination">
+                                            <p class="counter pull-right"> Page @number of @pageSize </p>
+                                            <ul style="display: flex;">
+                                                @for (int i = 1; i <= pageSize; i++)
+                                                {
+                                                    int page = i;
+                                                    <li><a class="" href="javascript:void(0)" @onclick=@(e => WinLoad("/thu-vien/hinh-anh/" + page))>@i</a></li>
+                                                    <span>-</span>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </section>
+@code {
+    [Parameter]
+    public string number { get; set; } = "1";
+    public int pageSize { get; set; } = 1;
+    public List<DanhMucImage> DanhMucImages = new List<DanhMucImage>();
+
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            var allPage = await DanhMucImagesService.GetAll();
+            pageSize = Convert.ToInt16(Math.Ceiling((decimal)allPage.Count() / (decimal)6));
+            DanhMucImages = allPage.OrderBy(d => d.Id).Skip((int.Parse(number ?? "1") - 1) * 6).Take(6).ToList();
+            StateHasChanged();
+        }
+        catch
+        {
+
+        }
+    }
+    private async void WinLoad(string url)
+    {
+        await JS.InvokeVoidAsync("WinLoad", url);
+    }
+
+}

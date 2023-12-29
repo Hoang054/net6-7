@@ -1,0 +1,287 @@
+﻿@page "/admin/kham-chua-benh/{id?}"
+
+@layout AdminLayout
+@using CharityClinic.Services;
+@using CharityClinic.Data.Model;
+@using System.Web.Helpers;
+@inject IBaseService<KhamChuaBenh> KhamChuaBenhService
+@inject IJSRuntime JS
+@inject ILogger<KhamChuaBenhAdmin> Logger
+@inject IHostEnvironment Environment
+
+@if (string.IsNullOrEmpty(id))
+{
+    <h3>Create khám chữa bệnh</h3>
+}
+else
+{
+    <h3>Update khám chữa bệnh</h3>
+    
+}
+<form action="javascript:void(0);">
+    @if (KhamChuaBenh.Content == "")
+    {
+        <div class="col-12" style="color: red;">
+            The Content field is required.
+        </div>
+    }
+    @if (KhamChuaBenh.Title == "")
+    {
+        <div class="col-12" style="color: red;">
+            The Tiltle field is required.
+        </div>
+    }
+    @if (imagePath == "")
+    {
+        <div class="col-12" style="color: red;">
+            The Image field is required.
+        </div>
+    }
+    @if (successCreate > 0 && string.IsNullOrEmpty(id))
+    {
+        <div class="col-12" style="color: limegreen;">
+            Tạo khám chữa bệnh thành công.
+        </div>
+    }
+    else if (successCreate > 0 && !string.IsNullOrEmpty(id))
+    {
+        <div class="col-12" style="color: limegreen;">
+            Update khám chữa bệnh thành công.
+        </div>
+    }
+    <div class="form-group">
+        <label>Title</label>
+        <input @bind="KhamChuaBenh.Title" class="form-control" />
+        <label>Image</label>
+        @*<input accept="image/*" type='file' id="file-input" />*@
+
+        @if (errorMaxSize)
+        {
+            <div class="col-12" style="color: red;">
+                The Image too large.
+            </div>
+        }
+        <InputFile OnChange="@LoadFiles" id="file-input" accept="image/*" class="form-control" />
+        <div class="result">
+            <img id="img-preview" src="@imagePath" alt="image" style="height: 200px;" />
+        </div>
+        <label>Content</label>
+        <textarea id="Content" @bind="KhamChuaBenh.Content" class="form-control" />
+        <span asp-validation-for="Content"></span>
+    </div>
+
+        @if(string.IsNullOrEmpty(id))
+        {
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled="@IsDisabled" @onclick="CreateNews">
+            @if (IsDisabled)
+            {
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            }
+            Create
+            </button>
+        }
+        else
+        {
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled="@IsDisabled" @onclick="CreateNews">
+            @if (IsDisabled)
+            {
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            }
+            Update
+            </button>
+        }
+    </form>
+@*</EditForm>*@
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Thông báo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if (IsDisabled)
+                {
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                }
+                else
+                {
+                    @if (successCreate > 0 && string.IsNullOrEmpty(id))
+                    {
+                        <div class="col-12" style="color: limegreen;">
+                            Tạo thành công.
+                        </div>
+                    }
+                    else if (successCreate > 0 && !string.IsNullOrEmpty(id))
+                    {
+                        <div class="col-12" style="color: limegreen;">
+                            Update thành công.
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-12" style="color: red;">
+                            Update or Create không thành công.
+                        </div>
+                    }
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string? id { get; set; }
+    private KhamChuaBenh KhamChuaBenh = new();
+    private int successCreate = 0;
+    private string imagePath = null;
+    public bool IsDisabled { get; set; }
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("import", "./js/admin/tinymce.min.js");
+            if (!string.IsNullOrEmpty(id))
+            {
+                var path = Path.Combine("KhamChuaBenhContent", id);
+                await JS.InvokeVoidAsync("init", path);
+
+            }
+            else
+            {
+                var ChamSoc = (await KhamChuaBenhService.GetAll());
+                var nextId = 1;
+                if (ChamSoc.Count() > 0)
+                    nextId = ChamSoc.OrderByDescending(d => d.Id).FirstOrDefault().Id + 1;
+                var path = Path.Combine("KhamChuaBenhContent", nextId.ToString());
+                await JS.InvokeVoidAsync("init", path);
+
+            }
+            await JS.InvokeVoidAsync("LoadImage");
+            if (!string.IsNullOrEmpty(id))
+            {
+                KhamChuaBenh = await KhamChuaBenhService.Get(id);
+                imagePath = KhamChuaBenh.PathImg;
+                if (!string.IsNullOrEmpty(KhamChuaBenh.Content))
+                    await JS.InvokeAsync<string>("setContent", KhamChuaBenh.Content);
+                StateHasChanged();
+            }
+        }
+        catch
+        {
+
+        }
+    }
+    private async Task CreateNews()
+    {
+        try
+        {
+            IsDisabled = true;
+            KhamChuaBenh.Id = 0;
+            KhamChuaBenh.Content = await JS.InvokeAsync<string>("getContent", null);
+            KhamChuaBenh.PathImg = imagePath;
+            if (string.IsNullOrEmpty(KhamChuaBenh.Title))
+            {
+                KhamChuaBenh.Title = "";
+            }
+            if (string.IsNullOrEmpty(imagePath))
+            {
+                imagePath = "";
+            }
+
+            if (!string.IsNullOrEmpty(KhamChuaBenh.Content) && !string.IsNullOrEmpty(KhamChuaBenh.Title) && !string.IsNullOrEmpty(imagePath))
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    KhamChuaBenh.TimeCreate = DateTime.Now;
+                    successCreate = await KhamChuaBenhService.Create(KhamChuaBenh);
+                }
+                else
+                {
+                    KhamChuaBenh.Id = int.Parse(id);
+                    successCreate = await KhamChuaBenhService.Update(KhamChuaBenh);
+                }
+            }
+            IsDisabled = false;
+            StateHasChanged();
+        }
+        catch(Exception e)
+        {
+
+        }
+    }
+    private List<IBrowserFile> loadedFiles = new();
+    private int maxAllowedFiles = 1;
+    private long maxFileSize = 10 * 1024 * 1024;
+    private bool errorMaxSize = false;
+    private string messsageError = "";
+
+    private async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        errorMaxSize = false;
+        loadedFiles.Clear();
+        try
+        {
+            foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
+            {
+                var trustedFileNameForFileStorage = Path.GetRandomFileName();
+                var path = Path.Combine(Environment.ContentRootPath, "wwwroot", "KhamChuaBenh");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                try
+                {
+                    if (!string.IsNullOrEmpty(id))
+                    {
+                        if (File.Exists(Path.Combine(path, id + ".jpg")))
+                        {
+                            File.Delete(Path.Combine(path, id + ".jpg"));
+                        }
+                        await using FileStream fs = new(Path.Combine(path, id + ".jpg"), FileMode.Create);
+                        imagePath = Path.Combine("KhamChuaBenh", id + ".jpg");
+                        await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+                        loadedFiles.Add(file);
+                        fs.Close();
+                    }
+                    else
+                    {
+                        var KhamChuaBenh = (await KhamChuaBenhService.GetAll());
+                        var nextId = 1;
+                        if(KhamChuaBenh.Count() > 0)
+                            nextId = KhamChuaBenh.OrderByDescending(d => d.Id).FirstOrDefault().Id + 1;
+                        if (File.Exists(Path.Combine(path, nextId + ".jpg")))
+                        {
+                            File.Delete(Path.Combine(path, nextId + ".jpg"));
+                        }
+                        await using FileStream fs = new(Path.Combine(path, nextId + ".jpg"), FileMode.Create);
+                        imagePath = Path.Combine("KhamChuaBenh", nextId + ".jpg");
+                        await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+                        loadedFiles.Add(file);
+                        fs.Close();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    errorMaxSize = true;
+                    messsageError = ex.Message;
+                    imagePath = "";
+                    Logger.LogError("File: {Filename} Error: {Error}",
+                        file.Name, ex.Message);
+                    StateHasChanged();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            
+            throw;
+        }
+
+    }
+}

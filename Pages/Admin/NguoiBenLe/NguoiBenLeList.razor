@@ -1,0 +1,124 @@
+﻿@page "/Admin/nguoi-ben-les"
+@using CharityClinic.Data.Model;
+@using CharityClinic.Services;
+@using CharityClinic.Shared;
+@layout AdminLayout
+@inject IBaseService<NguoiBenLe> NguoiBenLesService;
+@inject IJSRuntime JS
+@inject IHostEnvironment Environment
+
+<h3>Danh sách người bên lề</h3>
+
+<a class="btn" href="javascript:void(0)" @onclick=@(e => WinLoad("/admin/nguoi-ben-le"))>Create</a>
+<table id="myTable" class="display">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Image</th>
+            <th>TimeCreate</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(var item in NguoiBenLes)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Title</td>
+            <td><img src="@item.PathImg" alt="image" style="height: 80px;" /></td>
+            <td>@item.TimeCreate</td>
+            <td>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @onclick=@(e => ChangeId(item.Id))>
+                    <i class="fa fa-trash"></i>
+                </button>
+                    <a class="btn" href="javascript:void(0)" @onclick=@(e => WinLoad("/admin/nguoi-ben-le/" + item.Id))><i class="fa fa-pencil-square"></i></a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                @if (!content)
+                {
+                    <div class="modal-body">
+                        Bạn có muốn xoá?
+                    </div>
+                }
+                else
+                {
+                    <div class="modal-body">
+                        Xoá thành công
+                    </div>
+                }
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                
+                @if (!content)
+                {
+                    <button type="button" class="btn btn-primary" @onclick="DeleteNews">Delete</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    public List<NguoiBenLe> NguoiBenLes = new List<NguoiBenLe>();
+    protected int id;
+    protected bool content = false;
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            NguoiBenLes = (await NguoiBenLesService.GetAll()).ToList();
+            StateHasChanged();
+            await JS.InvokeVoidAsync("DataTable");
+        }
+        catch
+        {
+
+        }
+    }
+    private async Task DeleteNews()
+    {
+        var result = await NguoiBenLesService.Delete(id);
+        NguoiBenLes = (await NguoiBenLesService.GetAll()).ToList();
+
+        var path = Path.Combine(Environment.ContentRootPath, "wwwroot", "NguoiBenLe", id.ToString());
+        if (Directory.Exists(path))
+        {
+            Directory.Delete(path);
+        }
+        var pathContent = Path.Combine(Environment.ContentRootPath, "wwwroot", "NguoiBenLeContent", id.ToString());
+        if (Directory.Exists(pathContent))
+        {
+            Directory.Delete(pathContent);
+        }
+        if (result > 0)
+        {
+            content = true;
+        }
+        StateHasChanged();
+    }
+
+    private async Task ChangeId(int Id)
+    {
+        content = false;
+        id = Id;
+        StateHasChanged();
+    }
+    private async void WinLoad(string url)
+    {
+        await JS.InvokeVoidAsync("WinLoad", url);
+    }
+}

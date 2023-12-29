@@ -1,0 +1,215 @@
+﻿@page "/admin/slideImage/{id?}"
+
+@layout AdminLayout
+@using CharityClinic.Services;
+@using CharityClinic.Data.Model;
+@using System.Web.Helpers;
+@inject IBaseService<SlideImage> slideImagesService
+@inject IJSRuntime JS
+@inject ILogger<SlideImageAdmin> Logger
+@inject IHostEnvironment Environment
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <div class="col-12" style="color: limegreen;">
+        @message
+    </div>
+}else{
+@if (string.IsNullOrEmpty(id))
+{
+    <h3>Create Hình Ảnh Slide</h3>
+}
+else
+{
+    <h3>Update Hình Ảnh Slide</h3>
+    
+}
+@*<EditForm Model="Image" OnValidSubmit="CreateNews">*@
+<form action="javascript:void(0);">
+    @if (imagePath == "")
+    {
+        <div class="col-12" style="color: red;">
+            The Image field is required.
+        </div>
+    }
+    @if (successCreate > 0 && string.IsNullOrEmpty(id))
+    {
+        <div class="col-12" style="color: limegreen;">
+            Tạo Image thành công.
+        </div>
+    }
+    else if (successCreate > 0 && !string.IsNullOrEmpty(id))
+    {
+        <div class="col-12" style="color: limegreen;">
+            Update Image thành công.
+        </div>
+    }
+    <div class="form-group">
+        <label>Image</label>
+        @*<input accept="image/*" type='file' id="file-input" />*@
+
+        @if (errorMaxSize)
+        {
+            <div class="col-12" style="color: red;">
+                The Image too large.
+            </div>
+        }
+        <InputFile OnChange="@LoadFiles" id="file-input" accept="image/*" class="form-control" />
+        <div class="result">
+            <img id="img-preview" src="@imagePath" alt="image" style="height: 200px;" />
+        </div>
+        <span asp-validation-for="Content"></span>
+    </div>
+
+        @if(string.IsNullOrEmpty(id))
+        {
+            <button class="btn btn-primary" @onclick="CreateNews">
+                    Create
+            </button>
+        }
+        else
+        {
+            <button class="btn btn-primary" @onclick="CreateNews">
+                Update
+            </button>
+        }
+    </form>}
+@*</EditForm>*@
+@code {
+    [Parameter]
+    public string? id { get; set; }
+    private SlideImage slideImage = new SlideImage();
+    private int successCreate = 0;
+    private string imagePath = null;
+    private bool check = false;
+    private string message = "";
+
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("import", "./js/admin/tinymce.min.js");
+            await JS.InvokeVoidAsync("init", null);
+            await JS.InvokeVoidAsync("LoadImage");
+            check = false;
+            if (!string.IsNullOrEmpty(id))
+            {
+                slideImage = await slideImagesService.Get(id);
+                if(slideImage != null)
+                {
+                    imagePath = slideImage.PathImg;
+                    
+                }
+                else
+                {
+                    message = "Id không tồn tại";
+                }
+                StateHasChanged();
+            }
+        }
+        catch
+        {
+
+        }
+    }
+    private async Task CreateNews()
+    {
+        try
+        {
+            check = true;
+            slideImage.Id = 0;
+            slideImage.PathImg = imagePath;
+            if (string.IsNullOrEmpty(imagePath))
+            {
+                imagePath = "";
+            }
+
+            if (!string.IsNullOrEmpty(imagePath))
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    slideImage.TimeCreate = DateTime.Now;
+                    successCreate = await slideImagesService.Create(slideImage);
+                }
+                else
+                {
+                    slideImage.Id = int.Parse(id);
+                    successCreate = await slideImagesService.Update(slideImage);
+                }
+            }
+            StateHasChanged();
+        }
+        catch(Exception e)
+        {
+
+        }
+    }
+    private List<IBrowserFile> loadedFiles = new();
+    private int maxAllowedFiles = 1;
+    private long maxFileSize = 10 * 1024 * 1024;
+    private bool errorMaxSize = false;
+
+    private async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        errorMaxSize = false;
+        loadedFiles.Clear();
+        try
+        {
+            foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
+            {
+                var trustedFileNameForFileStorage = Path.GetRandomFileName();
+                var path = Path.Combine(Environment.ContentRootPath, "wwwroot", "SlideImage");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                try
+                {
+                    if (!string.IsNullOrEmpty(id))
+                    {
+                        if (File.Exists(Path.Combine(path, id + ".jpg")))
+                        {
+                            File.Delete(Path.Combine(path, id + ".jpg"));
+                        }
+                        await using FileStream fs = new(Path.Combine(path, id + ".jpg"), FileMode.Create);
+                        imagePath = Path.Combine("SlideImage", id + ".jpg");
+                        await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+                        loadedFiles.Add(file);
+                        fs.Close();
+                    }
+                    else
+                    {
+                        var slideImages = (await slideImagesService.GetAll());
+                        var nextId = 1;
+                        if (slideImages.Count() > 0)
+                            nextId = slideImages.OrderByDescending(d => d.Id).FirstOrDefault().Id + 1;
+                        if (File.Exists(Path.Combine(path, nextId + ".jpg")))
+                        {
+                            File.Delete(Path.Combine(path, nextId + ".jpg"));
+                        }
+                        await using FileStream fs = new(Path.Combine(path, nextId + ".jpg"), FileMode.Create);
+                        imagePath = Path.Combine("SlideImage", nextId + ".jpg");
+                        await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+                        loadedFiles.Add(file);
+                        fs.Close();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    errorMaxSize = true;
+                    imagePath = "";
+                    Logger.LogError("File: {Filename} Error: {Error}",
+                        file.Name, ex.Message);
+                    StateHasChanged();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            
+            throw;
+        }
+
+    }
+}

@@ -1,0 +1,57 @@
+﻿@page "/gioi-thieu/su-mang"
+@using CharityClinic.Services;
+@inject IBaseService<CharityClinic.Data.Model.GioiThieu> gioiThieuService;
+
+<section id="sp-breadcrumb-wrapper">
+    <div class="container">
+        <div class="row-fluid fadeInDown animated" id="breadcrumb" style="visibility: visible;">
+            <div id="sp-breadcrumb" class="span12">
+                <ul class="breadcrumb ">
+                    <li class="active"><span><i class="icon-map-marker hasTooltip" title="You are here: "></i></span></li>
+                    <li><a href="/" class="pathway">Home</a><span>/</span></li>
+                    <li><span>Giới Thiệu</span></li>
+                    <li><span>/</span><span>Sứ mạng</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+                            <section id="sp-component-wrapper">
+                                <div id="sp-component">
+                                    <div id="system-message-container">
+                                    </div>
+                                    <article class="item-page post-125 post hentry status-publish category-gia-i-thia-u ">
+                                        <header class="entry-header">
+                                            <div class="page-header">
+                                                <h1 class="entry-title">
+                                                    <a href="/gioi-thieu/su-mang">
+                                                        Sứ Mạng Hoạt động Khám Chữa Bệnh
+                                                    </a>
+                                                </h1>
+                                            </div>
+                                        </header>
+                                        <section class="entry-content media">
+                @if (GioiThieus.Where(e => e.TitleId == 9).Count() > 0)
+                {
+                    @((MarkupString)@GioiThieus.Where(e => e.TitleId == 9).FirstOrDefault().Content)
+                }
+                                        </section>
+                                    </article>
+                                </div>
+                            </section>
+
+@code {
+    public List<CharityClinic.Data.Model.GioiThieu> GioiThieus = new List<CharityClinic.Data.Model.GioiThieu>();
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            GioiThieus = (await gioiThieuService.GetAll()).ToList();
+            StateHasChanged();
+        }
+        catch
+        {
+
+        }
+    }
+}

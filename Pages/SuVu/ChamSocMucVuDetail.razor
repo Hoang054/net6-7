@@ -1,0 +1,79 @@
+﻿@page "/su-vu/ho-tro-cong-dong/cham-soc-muc-vu/detail/{id?}"
+@using CharityClinic.Data.Model;
+@using CharityClinic.Pages.Admin;
+@using CharityClinic.Services;
+@using Microsoft.AspNetCore.Html;
+@inject IJSRuntime JS
+@inject IBaseService<ChamSoc> chamSocsService;
+<section id="sp-breadcrumb-wrapper">
+    <div class="container">
+        <div class="row-fluid fadeInDown animated" id="breadcrumb" style="visibility: visible;">
+            <div id="sp-breadcrumb" class="span12">
+                <ul class="breadcrumb ">
+                    <li class="active"><span><i class="icon-map-marker hasTooltip" title="You are here: "></i></span></li>
+                    <li><a href="/" class="pathway">Home</a><span>/</span></li>
+                    <li><span>Sứ Vụ</span><span>/</span></li>
+                    <li><a href="#" class="pathway">Hổ trợ cộng đồng</a></li>
+                    <li><span>/</span><a href="/su-vu/ho-tro-cong-dong/cham-soc-muc-vu" class="pathway"><span>Chăm sóc mục vụ</span></a></li>
+                    <li><span>/</span><span>@Title</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<header class="entry-header">
+    <div class="page-header">
+        <h1 class="entry-title">
+            <a href="#">
+                @Title
+            </a>
+        </h1>
+    </div>
+</header>
+<div class="entry-meta muted clearfix">
+    <time class="create-date" datetime="2023-11-17 09:29:47">
+        @TimeCreate
+    </time>
+</div>
+
+<section class="entry-content media">
+    <div id="content-content">
+        @((MarkupString)Content)
+    </div>
+</section>
+
+@code {
+    [Parameter]
+    public string? id { get; set; }
+    public ChamSoc? chamSocs = new ChamSoc();
+    public string Content { get; set; }
+    public string Title { get; set; }
+    public DateTime TimeCreate { get; set; }
+
+    protected override async void OnInitialized()
+    {
+        try
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                chamSocs = await chamSocsService.Get(id);
+                if(chamSocs == null)
+                {
+                    Content = "Id không tồn tại";
+                }
+                else
+                {
+                    Content = chamSocs.Content;
+                    Title = chamSocs.Title;
+                    TimeCreate = chamSocs.TimeCreate;
+                }
+                StateHasChanged();
+            }
+        }
+        catch
+        {
+
+        }
+    }
+
+}

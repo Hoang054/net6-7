@@ -1,0 +1,81 @@
+﻿@page "/gioi-thieu/lich-su"
+@using CharityClinic.Services;
+@inject IBaseService<CharityClinic.Data.Model.LichSu> LichSuService;
+
+<section id="sp-breadcrumb-wrapper">
+   <div class="container">
+      <div class="row-fluid fadeInDown animated" id="breadcrumb" style="visibility: visible;">
+         <div id="sp-breadcrumb" class="span12">
+            <ul class="breadcrumb ">
+               <li class="active"><span><i class="icon-map-marker hasTooltip" title="You are here: "></i></span></li>
+               <li><a href="/" class="pathway">Home</a><span>/</span></li>
+               <li><span>Giới Thiệu</span></li>
+               <li><span>/</span><span>Lịch sử</span></li>
+            </ul>
+         </div>
+      </div>
+   </div>
+</section>
+            <section id="sp-component-area-wrapper" class=" ">
+               <div class="row-fluid fadeInDown animated" id="component-area" style="visibility: visible;">
+                  <div id="sp-component-area" class="span12">
+                     <section id="sp-component-wrapper">
+                        <div id="sp-component">
+                           <div id="system-message-container">
+                           </div>
+                           <article class="item-page post-21 post hentry status-publish category-gia-i-thia-u ">
+                              <header class="entry-header">
+                                 <div class="page-header">
+                                    <h1 class="entry-title">
+                                       Lịch sử: Quá trình hình thành và phát triển Phòng Khám Kim Long								
+                                    </h1>
+                                 </div>
+                              </header>
+                              <section class="entry-content media">
+                                 <p>&nbsp;</p>
+                            @if(LichSus.Count() > 0)
+                            {
+                                <p style="text-align: center;"><span style="font-size: 16pt; font-family: arial, helvetica, sans-serif;"><strong>@LichSus[0].Year</strong></span></p>
+                                @((MarkupString)@LichSus[0].Content)
+
+                            }
+                                 <div id="vina_faq">
+                                    <div class="accordion" id="vina-accordion">
+                                    @for(int i = 1; i < LichSus.Count(); i++)
+                                    {
+                                        <div class="accordion-group">
+                                            <div class="accordion-heading"><a class="accordion-toggle" data-bs-toggle="collapse" data-bs-parent="#vina-accordion" href="#@LichSus[i].Year.ToLower().Replace(" ", "-")"><span class="number">⇒</span> @LichSus[i].Year<i class="pull-right icon-plus"></i></a></div>
+                                            <div id="@LichSus[i].Year.ToLower().Replace(" ", "-")" class="accordion-body collapse">
+                                                <div class="accordion-inner">
+                                                    @((MarkupString)@LichSus[i].Content)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    </div>
+                                    <p></p>
+                                    <p style="text-align: right;"><em><strong>Phòng khám Từ thiện Kim Long, FMI</strong></em></p>
+                                 </div>
+                              </section>
+                           </article>
+                        </div>
+                     </section>
+                  </div>
+               </div>
+            </section>
+
+@code {
+    public List<CharityClinic.Data.Model.LichSu> LichSus = new List<CharityClinic.Data.Model.LichSu>();
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            LichSus = (await LichSuService.GetAll()).ToList();
+            StateHasChanged();
+        }
+        catch
+        {
+
+        }
+    }
+}

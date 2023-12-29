@@ -1,0 +1,421 @@
+﻿@page "/"
+@using CharityClinic.Data.Model;
+@using CharityClinic.Services;
+@inject IBaseService<NewsDb> newsService;
+@inject IBaseService<KhamChuaBenh> KhamChuaBenhService;
+@inject IBaseService<ChamSoc> ChamSocService;
+@inject IBaseService<SlideImage> SlideImageService;
+@inject IBaseService<CharityClinic.Data.Model.GioiThieu> gioiThieuService;
+
+<PageTitle>Trang Chủ</PageTitle>
+
+    <section id="sp-feature-wrapper" class=" ">
+      <div class="container">
+         <div class="row-fluid fadeInDown animated" id="feature" style="visibility: visible;">
+            <div id="sp-feature" class="span12" style="margin-bottom: -15px;">
+               <style type="text/css">
+                    #vina-awesome-slider144 {
+                    max-width: 100%;
+                    }
+                    #vina-awesome-slider144 .ws_bulframe div {
+                    width: 120px;
+                    }
+                    #vina-awesome-slider144 .ws_bulframe div div {
+                    height: 60px;
+                    }
+                    #vina-awesome-slider144 .ws_bulframe span {
+                    left: 60px;
+                    }
+                    #vina-awesome-slider144 .ws-title {
+                    top: 130px; right: 78px;}
+                    #vina-copyright144 {
+                    font-size: 12px;
+                    height: 1px;
+                    overflow: hidden;
+                    clear: both;
+                    }
+
+                    .item-info {
+                        margin-top: -40px;
+                    }
+               </style>
+               <div id="vina-awesome-slider144" class="vina-awesome-slider" style="font-size: 8.03419px;">
+                    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            @if(SlideImages.Count() > 0)
+                            {
+                                <div class="carousel-item active" data-bs-interval="10000">
+                                    <img src="@SlideImages[0].PathImg" class="d-block w-100" alt="image">
+                                </div>
+                            }
+                            @if (SlideImages.Count() > 1)
+                            {
+                                <div class="carousel-item" data-bs-interval="2000">
+                                    <img src="@SlideImages[1].PathImg" class="d-block w-100" alt="image">
+                                </div>
+                            }
+                            @for(int i = 2; i < SlideImages.Count(); i ++)
+                            {
+                                <div class="carousel-item">
+                                    <img src="@SlideImages[i].PathImg" class="d-block w-100" alt="image">
+                                </div>
+                            }
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+               </div>
+               <div id="vina-copyright144">© Free <a href="http://vinagecko.com/joomla-modules" title="Free Joomla! 3 Modules">Joomla! 3 Modules</a>- by <a href="http://vinagecko.com/" title="Beautiful Joomla! 3 Templates and Powerful Joomla! 3 Modules, Plugins.">VinaGecko.com</a></div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <section id="sp-position-wrapper" class=" ">
+      <div class="container">
+         <div class="row-fluid fadeInDown animated" id="position" style="visibility: visible;">
+            <div id="sp-position1" class="span8" style="display: flow-root;">
+               <div class="custom vina-event-wrapper">
+                  <div class="vina-event">
+                     <div id="event-content">
+                        <div class="row-fluid fadeInDown animated" style="visibility: visible;">
+                           <div class="event-content">
+                              <div class="event-main">
+                                        @if (GioiThieus.Count() > 0 && GioiThieus.Where(e => e.TitleId == 1).Count() > 0)
+                                        {
+                                            <h3>@GioiThieus.Where(e => e.TitleId == 1).FirstOrDefault().Title</h3>
+                                 @*<p><img src="/images/border_03.png" alt="" border="0"></p>*@
+                                 @*<p><strong><span style="font-family: tahoma, arial, helvetica, sans-serif;">Phòng khám Từ thiện Kim Long chính thức hoạt động tại cơ sở mới</span>.</strong></p>
+                                 <p><u>Phạm vi hoạt động:</u> Khám bệnh, kê đơn, sơ cứu, cấp cứu ban đầu các bệnh Nội khoa; Nhi khoa; Y học cổ truyền; Xét nghiệm và Chẩn đoán hình ảnh.</p>*@
+                                            @((MarkupString)@GioiThieus.Where(e => e.TitleId == 1).FirstOrDefault().Content)
+                                        }
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="custom vina-event-wrapper">
+                  <div class="vina-event">
+                     <div id="event-content">
+                        <div class="row-fluid fadeInDown animated" style="visibility: visible;">
+                           <div class="event-content">
+                                    <div class="event-main" style="padding: 19px 20px;">
+                                        @if (GioiThieus.Where(e => e.TitleId == 2).Count() > 0)
+                                        {
+                                            <h3>@GioiThieus.Where(e => e.TitleId == 2).FirstOrDefault().Title</h3>
+                                            @*<p><img src="/images/border_03.png" alt="" border="0"></p>*@
+                                            @*<p><strong><span style="font-family: tahoma, arial, helvetica, sans-serif;">Phòng khám Từ thiện Kim Long chính thức hoạt động tại cơ sở mới</span>.</strong></p>
+                                        <p><u>Phạm vi hoạt động:</u> Khám bệnh, kê đơn, sơ cứu, cấp cứu ban đầu các bệnh Nội khoa; Nhi khoa; Y học cổ truyền; Xét nghiệm và Chẩn đoán hình ảnh.</p>*@
+                                            @((MarkupString)@GioiThieus.Where(e => e.TitleId == 2).FirstOrDefault().Content)
+                                        }
+                                 </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div id="sp-position2" class="span4" style="min-height: 299px;">
+               <div class="module  vina-feature">
+                  <div class="mod-wrapper clearfix">
+                        @if (GioiThieus.Where(e => e.TitleId == 3).Count() > 0)
+                        {
+                            <h4 class="header">
+                                <span>@GioiThieus.Where(e => e.TitleId == 3).FirstOrDefault().Title</span>
+                            </h4>
+                            <span class="sp-badge  vina-feature"></span>							
+                            <div class="mod-content clearfix">
+                                @((MarkupString)GioiThieus.Where(e => e.TitleId == 3).FirstOrDefault().Content)
+                            </div>
+                        }
+                    </div>
+               </div>
+               <div class="gap"></div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <section id="sp-goals-wrapper" class=" ">
+      <div class="container">
+         <div class="row-fluid fadeInDown animated" id="goals" style="visibility: visible;">
+            <div id="sp-goals" class="span12">
+               <div class="module  vina-our-goals">
+                  <div class="mod-wrapper-flat clearfix">
+                     <div class="world-title-bg">
+                        <h2 class="world-title">		
+                           <span>
+                           Nền tảng <span class="color">Giá trị</span>						<span>
+                           </span></span>
+                        </h2>
+                     </div>
+                     <span class="sp-badge  vina-our-goals"></span>							
+                     <div class="custom vina-our-goals">
+                        <div class="row-fluid fadeInDown animated" style="visibility: visible;">
+                           <div class="span4">
+                              <div class="user-item circle effect3 bottom_to_top">
+                                 <div class="user-item-inner">
+                                    <div class="img">
+                                       <h3 class="time-title">1</h3>
+                                    </div>
+                                    <div class="item-info">
+                                       <h4>Tầm nhìn</h4>
+                                       <p><span style="font-size: 12pt;">Phòng khám từ thiện của Lòng Thương Xót Chúa đối với anh chị em đau khổ, bệnh tật.</span></p>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="span4">
+                              <div class="user-item circle effect3 bottom_to_top">
+                                 <div class="user-item-inner">
+                                    <div class="img">
+                                       <h3 class="time-title">2</h3>
+                                    </div>
+                                    <div class="item-info">
+                                       <h4>Sứ mạng</h4>
+                                       <p><span style="font-size: 12pt;">Tiếp nối sứ mạng chữa lành của Chúa Giê-su qua việc chăm sóc sức khỏe thể chất và hỗ trợ tinh thần, xã hội để xoa dịu nỗi khổ đau của tha nhân, đặc biệt ưu tiên yêu thương người nghèo.</span></p>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="span4">
+                              <div class="user-item circle effect3 bottom_to_top">
+                                 <div class="user-item-inner">
+                                    <div class="img">
+                                       <h3 class="time-title">3</h3>
+                                    </div>
+                                    <div class="item-info">
+                                       <h4>Giá trị cốt lõi</h4>
+                                       <p><span style="font-size: 12pt;">• Đồng cảm và chia sẻ. <br>• Phục vụ tận tâm, trách nhiệm và vui tươi. <br>• Hợp tác và tôn trọng.</span></p>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="gap"></div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <section id="sp-gallery-wrapper" class=" ">
+      <div class="container">
+         <div class="row-fluid fadeInDown animated" id="gallery" style="visibility: visible;">
+            <div id="sp-position3" class="span4">
+               <div class="module ">
+                  <div class="mod-wrapper clearfix">
+                     <h3 class="">			
+                        <span>Y tế - Khám chữa bệnh</span>				
+                     </h3>
+                     <div class="mod-content clearfix">
+                        <div class="mod-inner clearfix">
+                           <div class="junewsultra ">
+                                @if (KhamChuaBenhs.Count() != 0)
+                                {
+                                    var check = false;
+                                    @for (int i = 0; i < 2; i++)
+                                    {
+                                        if (KhamChuaBenhs.Count() < 2 && i > 0)
+                                        {
+                                            i--;
+                                                check = true;
+                                            }
+                                        <div class="jn">
+                                            <div class="jn-head">
+                                                <div class="jn-left">
+                                                    <a href="/su-vu/y-te/kham-chua-benh/detail/@KhamChuaBenhs[i].Id" title="@KhamChuaBenhs[i].Title"><img loading="lazy" decoding="async" src="@KhamChuaBenhs[i].PathImg" width="82" height="70" alt="@KhamChuaBenhs[i].Title"></a>
+                                                </div>
+                                                <div class="jn-right">
+                                                    <h4>
+                                                            <a href="/su-vu/y-te/kham-chua-benh/detail/@KhamChuaBenhs[i].Id">
+                                                            @KhamChuaBenhs[i].Title
+                                                        </a>
+                                                    </h4>
+                                                    <div class="jn-info">
+                                                        <span class="jn-small">@KhamChuaBenhs[i].TimeCreate</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="jn-intro">
+                                                @(
+                                                (MarkupString)@KhamChuaBenhs[i].Content.Substring(0, 250))
+                                            </div>
+                                        </div>
+                                            if(check){
+                                            i++;
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="gap"></div>
+            </div>
+            <div id="sp-position4" class="span4">
+               <div class="module ">
+                  <div class="mod-wrapper clearfix">
+                     <h3 class="">			
+                        <span>Bản tin</span>				
+                     </h3>
+                     <div class="mod-content clearfix">
+                        <div class="mod-inner clearfix">
+                           <div class="junewsultra ">
+                                    @if (news.Count() != 0)
+                                {
+                                    @for (int i = 0; i < 2; i++)
+                                    {
+                                            var check = false;
+                                            if (news.Count() < 2 && i > 0)
+                                        {
+                                            i--;
+                                                check = true;
+                                            }
+                                        <div class="jn">
+                                            <div class="jn-head">
+                                                <div class="jn-left">
+                                                        <a href="/ban-tin/tin-phong-kham/@news[i].Id" title="@news[i].Tiltle"><img loading="lazy" decoding="async" src="@news[i].PathImg" width="82" height="70" alt="@news[i].Tiltle"></a>
+                                                </div>
+                                                <div class="jn-right">
+                                                    <h4>
+                                                            <a href="/ban-tin/tin-phong-kham/@news[i].Id">
+                                                            @news[i].Tiltle
+                                                        </a>
+                                                    </h4>
+                                                    <div class="jn-info">
+                                                        <span class="jn-small">@news[i].TimeCreate</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="jn-intro">
+                                                @(
+                                                    (MarkupString)@news[i].Content.Substring(0, 250)
+                                                    )
+                                            </div>
+                                        </div>
+                                        if (check)
+                                        {
+                                            i++;
+                                        }
+                                    }
+
+                                }
+                            </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="gap"></div>
+            </div>
+            <div id="sp-position5" class="span4">
+               <div class="module ">
+                  <div class="mod-wrapper clearfix">
+                     <h3 class="">			
+                        <span>Y tế - Hổ trợ cộng đồng</span>				
+                     </h3>
+                     <div class="mod-content clearfix">
+                        <div class="mod-inner clearfix">
+                           <div class="junewsultra ">
+                                @if (ChamSocs.Count() != 0)
+                                {
+                                        var check = false;
+                                        @for (int i = 0; i < 2; i++)
+                                    {
+                                        if (ChamSocs.Count() < 2 && i > 0)
+                                        {
+                                            i--;
+                                                check = true;
+                                        }
+                                        <div class="jn">
+                                            <div class="jn-head">
+                                                <div class="jn-left">
+                                                        <a href="/su-vu/y-te/suc-khoe-cong-dong/detail/@ChamSocs[i].Id" title="@ChamSocs[i].Title"><img loading="lazy" decoding="async" src="@ChamSocs[i].PathImg" width="82" height="70" alt="@ChamSocs[i].Title"></a>
+                                                </div>
+                                                <div class="jn-right">
+                                                    <h4>
+                                                            <a href="/su-vu/y-te/suc-khoe-cong-dong/detail/@ChamSocs[i].Id">
+                                                            @ChamSocs[i].Title
+                                                        </a>
+                                                    </h4>
+                                                    <div class="jn-info">
+                                                        <span class="jn-small">@ChamSocs[i].TimeCreate</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="jn-intro">
+                                                @((MarkupString)@ChamSocs[i].Content.Substring(0, 250)
+                                                    )
+                                            </div>
+                                            </div>
+                                            if (check)
+                                            {
+                                                i++;
+                                            }
+                                    }
+                                }
+                            </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="gap"></div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <section id="sp-main-body-wrapper" class=" ">
+      <div class="container">
+         <div class="row-fluid fadeInDown animated" id="main-body" style="visibility: visible;">
+            <div id="sp-message-area" class="span12">
+               <section id="sp-component-area-wrapper" class=" ">
+                  <div class="row-fluid fadeInDown animated" id="component-area" style="visibility: visible;">
+                     <div id="sp-component-area" class="span12">
+                        <section id="sp-component-wrapper">
+                           <div id="sp-component">
+                              <div id="system-message-container">
+                              </div>
+                              <section class="featured ">
+                              </section>
+                           </div>
+                        </section>
+                     </div>
+                  </div>
+               </section>
+            </div>
+         </div>
+      </div>
+   </section>
+
+@code {
+    public List<NewsDb> news = new List<NewsDb>();
+    public List<ChamSoc> ChamSocs = new List<ChamSoc>();
+    public List<KhamChuaBenh> KhamChuaBenhs = new List<KhamChuaBenh>();
+    public List<SlideImage> SlideImages = new List<SlideImage>();
+    public List<CharityClinic.Data.Model.GioiThieu> GioiThieus = new List<CharityClinic.Data.Model.GioiThieu>();
+    protected int id;
+    protected bool content = false;
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            news = (await newsService.GetAll()).OrderByDescending(e => e.Id).ToList();
+            ChamSocs = (await ChamSocService.GetAll()).OrderByDescending(e => e.Id).ToList();
+            KhamChuaBenhs = (await KhamChuaBenhService.GetAll()).OrderByDescending(e => e.Id).ToList();
+            SlideImages = (await SlideImageService.GetAll()).OrderByDescending(e => e.Id).ToList();
+            GioiThieus = (await gioiThieuService.GetAll()).ToList();
+            StateHasChanged();
+        }
+        catch
+        {
+
+        }
+    }
+}

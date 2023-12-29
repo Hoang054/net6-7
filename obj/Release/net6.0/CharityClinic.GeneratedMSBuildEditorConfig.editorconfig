@@ -1,0 +1,161 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = CharityClinic
+build_property.RootNamespace = CharityClinic
+build_property.ProjectDir = D:\abc\CharityClinic\CharityClinic\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\abc\CharityClinic\CharityClinic
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/abc/CharityClinic/CharityClinic/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/Admin/Admin.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQWRtaW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/Admin/BanTinAdmin.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQmFuVGluQWRtaW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/Admin/News.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTmV3cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/Admin/NewsList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTmV3c0xpc3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/AuthPage/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFBhZ2VcTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/AuthPage/Register.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFBhZ2VcUmVnaXN0ZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/BanTin/BanTin.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmFuVGluXEJhblRpbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/BanTin/BanTinDetail.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmFuVGluXEJhblRpbkRldGFpbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/Counter.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/FetchData.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/GioiThieu/LichSu.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2lvaVRoaWV1XExpY2hTdS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/GioiThieu/LienHe.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2lvaVRoaWV1XExpZW5IZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/GioiThieu/SuMang.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2lvaVRoaWV1XFN1TWFuZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/GioiThieu/VeChungToi.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2lvaVRoaWV1XFZlQ2h1bmdUb2kucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/LienHe.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGllbkhlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/SuVu/ChamSocMucVu.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VWdVxDaGFtU29jTXVjVnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/SuVu/KhamChuaBenh.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VWdVxLaGFtQ2h1YUJlbmgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/SuVu/NguoiBenLe.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VWdVxOZ3VvaUJlbkxlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/SuVu/SucKhoeCongDong.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VWdVxTdWNLaG9lQ29uZ0RvbmcucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/ThuVien/HinhAnh.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGh1VmllblxIaW5oQW5oLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/ThuVien/Video.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGh1VmllblxWaWRlby5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Shared/AdminLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEFkbWluTGF5b3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Shared/EmptyLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEVtcHR5TGF5b3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Shared/FooterPage.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEZvb3RlclBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Shared/Header.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEhlYWRlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Shared/SurveyPrompt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Shared/Title.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFRpdGxlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-0a0lcvvd8l
+
+[D:/abc/CharityClinic/CharityClinic/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-kuol1iywl7
+
+[D:/abc/CharityClinic/CharityClinic/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/_Host.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0xheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/abc/CharityClinic/CharityClinic/Pages/_LayoutAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0xheW91dEFkbWluLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 

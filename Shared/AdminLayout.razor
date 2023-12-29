@@ -1,0 +1,173 @@
+﻿@inherits LayoutComponentBase
+@using Blazored.LocalStorage;
+@using CharityClinic.Services
+@inject IJSRuntime JS
+@inject IAuthService AuthService
+@inject ILocalStorageService _localStorageService
+@inject NavigationManager NavigationManager
+
+<div id="__next">
+    <div id="db-wrapper" class="">
+        <div class="navbar-vertical navbar">
+            <div data-simplebar="init" style="max-height:100vh" class="">
+                <div class="simplebar-wrapper" style="margin: 0px;">
+                    <div class="simplebar-height-auto-observer-wrapper">
+                        <div class="simplebar-height-auto-observer"></div>
+                    </div>
+                    <div class="simplebar-mask">
+                        <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                            <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;">
+                                <div class="simplebar-content" style="padding: 0px;">
+                                    <div class="nav-scroller"><a class="navbar-brand" href="/Admin"><img src="/images/logo.png" alt="" class=""></a></div>
+                                    <ul class="navbar-nav flex-column accordion">
+                                        <div class="nav-item"><a class="nav-link active" href="/Admin"><i class="fa fa-home"></i>Admin</a></div>
+                                        <div class="nav-item">
+                                            <div class="navbar-heading">LAYOUTS &amp; PAGES</div>
+                                        </div>
+                                        <li class="nav-item"><a class="nav-link " data-bs-toggle="collapse" data-bs-target="#navDashboard" aria-expanded="false" aria-controls="navDashboard" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/newsList"))><i class="nav-icon fe fe-layers me-2"></i> Bản tin</a></li>
+                                        <div class="nav-item">
+                                            <a class="nav-link dropdown-toggle" id="suvu" data-bs-toggle="dropdown" aria-expanded="false" href="javascript:void(0)">
+                                                <i class="nav-icon fe fe-layers me-2"></i> Sứ Vụ
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="suvu">
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/cham-soc-muc-vus"))> <i class="nav-icon fe fe-layers me-2"></i> Chăm sóc Mục Vụ</a></li>
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/kham-chua-benhs"))> <i class="nav-icon fe fe-layers me-2"></i> Khám chữa bệnh</a></li>
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/nguoi-ben-les"))> <i class="nav-icon fe fe-layers me-2"></i> Người bên lề</a></li>
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/suc-khoe-cong-dongs"))> <i class="nav-icon fe fe-layers me-2"></i> Sức khoẻ cộng đồng</a></li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <div class="nav-item">
+                                            <a class="nav-link dropdown-toggle" id="thuvien" data-bs-toggle="dropdown" aria-expanded="false" href="javascript:void(0)">
+                                                <i class="nav-icon fe fe-layers me-2"></i> Thư Viện
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="thuvien">
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/danh-muc-anhs"))> <i class="nav-icon fe fe-layers me-2"></i> Danh mục ảnh</a></li>
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/hinh-anhs"))> <i class="nav-icon fe fe-layers me-2"></i> Hình ảnh</a></li>
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/videos"))> <i class="nav-icon fe fe-layers me-2"></i> Video</a></li>
+                                            </ul>
+                                        </div>
+
+                                        <li class="nav-item"><a class="nav-link " data-bs-toggle="collapse" data-bs-target="#navDashboard" aria-expanded="false" aria-controls="navDashboard" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/slideImages"))><i class="nav-icon fe fe-layers me-2"></i> Slide</a></li>
+
+                                        <div class="nav-item">
+                                            <a class="nav-link dropdown-toggle" id="thongbao" data-bs-toggle="dropdown" aria-expanded="false" href="javascript:void(0)">
+                                                <i class="nav-icon fe fe-layers me-2"></i> Thông Báo
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="thongbao">
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/thong-bao/1"))> <i class="nav-icon fe fe-layers me-2"></i> Thông báo 1</a></li>
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/thong-bao/2"))> <i class="nav-icon fe fe-layers me-2"></i> Thông báo 2</a></li>
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/thong-bao/3"))> <i class="nav-icon fe fe-layers me-2"></i> Thông báo 3</a></li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <div class="nav-item">
+                                            <a class="nav-link dropdown-toggle" id="gioithieu" data-bs-toggle="dropdown" aria-expanded="false" href="javascript:void(0)">
+                                                <i class="nav-icon fe fe-layers me-2"></i> Giới Thiệu
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="gioithieu">
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/gioi-thieu/4"))> <i class="nav-icon fe fe-layers me-2"></i> Giới thiệu 4</a></li>
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/gioi-thieu/5"))> <i class="nav-icon fe fe-layers me-2"></i> Giới thiệu 5</a></li>
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/gioi-thieu/6"))> <i class="nav-icon fe fe-layers me-2"></i> Giới thiệu 6</a></li>
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/gioi-thieu/7"))> <i class="nav-icon fe fe-layers me-2"></i> Giới thiệu 7</a></li>
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/gioi-thieu/8"))> <i class="nav-icon fe fe-layers me-2"></i> Giới thiệu 8</a></li>
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/gioi-thieu/9"))> <i class="nav-icon fe fe-layers me-2"></i> Giới thiệu 9</a></li>
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/gioi-thieu/10"))> <i class="nav-icon fe fe-layers me-2"></i> Giới thiệu 10</a></li>
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/gioi-thieu/11"))> <i class="nav-icon fe fe-layers me-2"></i> Giới thiệu 11</a></li>
+                                                <li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/gioi-thieu/12"))> <i class="nav-icon fe fe-layers me-2"></i> Giới thiệu 12</a></li>
+                                                @*<li><a class="nav-link dropdown-item" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/gioi-thieu/13"))> <i class="nav-icon fe fe-layers me-2"></i> Giới thiệu 13</a></li>*@
+                                            </ul>
+                                        </div>
+
+                                        <li class="nav-item"><a class="nav-link " data-bs-toggle="collapse" data-bs-target="#navDashboard" aria-expanded="false" aria-controls="navDashboard" href="javascript:void(0)" @onclick=@(e => WinLoad("/Admin/lich-sus"))><i class="nav-icon fe fe-layers me-2"></i> Lịch Sử</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="simplebar-placeholder" style="width: 249px; height: 607px;"></div>
+                </div>
+                <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+                    <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+                </div>
+                <div class="simplebar-track simplebar-vertical" style="visibility: hidden;">
+                    <div class="simplebar-scrollbar" style="height: 0px; display: none;"></div>
+                </div>
+            </div>
+        </div>
+        <div id="page-content">
+            <div class="header">
+                <nav class="navbar-classic navbar navbar-expand-lg navbar navbar-expand navbar-light">
+                    <div class="d-flex justify-content-between w-100">
+                        <div class="d-flex align-items-center">
+                            <a id="nav-toggle" class="nav-icon me-2 icon-xs" href="javascript:void(0)" @onclick="ChangeLayout">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                                </svg>
+                            </a>
+                            <div class="ms-lg-3 d-none d-md-none d-lg-block">
+                                <form class="d-flex align-items-center"><input placeholder="Search" type="search" class="form-control"></form>
+                            </div>
+                        </div>
+                        <div class="navbar-right-wrap ms-2 d-flex nav-top-wrap navbar-nav">
+                            <ul class="navbar-right-wrap ms-auto d-flex nav-top-wrap navbar-nav">
+                                <li class="stopevent dropdown"><a href="javascript:void(0)" @onclick="LogOut" aria-expanded="false">Log Out</a></li>
+                                <li class="ms-2 dropdown">
+                                    <a class="rounded-circle  " id="dropdownUser" aria-expanded="false">
+                                        <div class="avatar avatar-md avatar-indicators avatar-online"><img alt="avatar" src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=" class="rounded-circle"></div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="bg-primary pt-10 pb-21"></div>
+            <div class="mt-n22 px-6 container-fluid">
+                <div class="row">
+                    @Body
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            var UserId = await _localStorageService.GetItemAsync<string>("UserId");
+            if (string.IsNullOrEmpty(UserId))
+            {
+                NavigationManager.NavigateTo("/Login");
+            }
+            await JS.InvokeVoidAsync("import", "./js/jquery-3.7.1.min.js");
+            await JS.InvokeVoidAsync("import", "./js/bootstrap.min.js");
+            await JS.InvokeVoidAsync("import", "./js/admin/tinymce.min.js");
+            await JS.InvokeVoidAsync("import", "./js/script.js");
+            await JS.InvokeVoidAsync("import", "./js/menu.js");
+            await JS.InvokeVoidAsync("spnoConflict", null);
+            //await JS.InvokeVoidAsync("defaultLayout");
+        }
+        catch
+        {
+
+        }
+    }
+    protected async void LogOut()
+    {
+        await AuthService.Logout();
+        NavigationManager.NavigateTo("/Login");
+    }
+    private async void WinLoad(string url)
+    {
+        await JS.InvokeVoidAsync("WinLoad", url);
+    }
+    private async void ChangeLayout()
+    {
+        await JS.InvokeVoidAsync("ChangeLayout");
+    }
+}

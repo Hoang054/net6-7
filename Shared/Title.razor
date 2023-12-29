@@ -1,0 +1,19 @@
+﻿
+<section id="sp-breadcrumb-wrapper" class=" " style="margin-top: 116px;">
+    <div class="container">
+        <div class="row-fluid fadeInDown animated" id="breadcrumb" style="visibility: visible;">
+            <div id="sp-breadcrumb" class="span12">
+                <ul class="breadcrumb ">
+                    <li class="active"><span class="divider"><i class="icon-map-marker hasTooltip" title="You are here: "></i></span></li>
+                    <li><a href="/" class="pathway">Home</a><span class="divider">/</span></li>
+                    @((MarkupString)title)
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter]
+    public string title { get; set; }
+}

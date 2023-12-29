@@ -1,0 +1,349 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\obj\\Release\\net6.0\\scopedcss\\projectbundle\\CharityClinic.bundle.scp.css",
+      "PackagePath": "staticwebassets\\CharityClinic.bundle.scp.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\Admin\\apexcharts.css",
+      "PackagePath": "staticwebassets\\css\\Admin\\apexcharts.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\Admin\\d86cfa61a4822fe0.css",
+      "PackagePath": "staticwebassets\\css\\Admin\\d86cfa61a4822fe0.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\animate.css",
+      "PackagePath": "staticwebassets\\css\\animate.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\bootstrap-responsive.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap-responsive.min.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\font-awesome.css",
+      "PackagePath": "staticwebassets\\css\\font-awesome.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\format.xml",
+      "PackagePath": "staticwebassets\\css\\format.xml"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\gallery.css",
+      "PackagePath": "staticwebassets\\css\\gallery.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\ks.css",
+      "PackagePath": "staticwebassets\\css\\ks.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\mobile-menu.css",
+      "PackagePath": "staticwebassets\\css\\mobile-menu.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "PackagePath": "staticwebassets\\css\\open-iconic"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "PackagePath": "staticwebassets\\css\\open-iconic"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\open-iconic\\README.md",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\README.md"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\preset2.css",
+      "PackagePath": "staticwebassets\\css\\preset2.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\presets_preset2.css",
+      "PackagePath": "staticwebassets\\css\\presets_preset2.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\style.css",
+      "PackagePath": "staticwebassets\\css\\style.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\styles_style.css",
+      "PackagePath": "staticwebassets\\css\\styles_style.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\css\\template.css",
+      "PackagePath": "staticwebassets\\css\\template.css"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\bg-goals.png",
+      "PackagePath": "staticwebassets\\images\\bg-goals.png"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\border_03.png",
+      "PackagePath": "staticwebassets\\images\\border_03.png"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\favicon.ico",
+      "PackagePath": "staticwebassets\\images\\favicon.ico"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\icons\\diachi.png",
+      "PackagePath": "staticwebassets\\images\\icons\\diachi.png"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\icons\\dienthoai.png",
+      "PackagePath": "staticwebassets\\images\\icons\\dienthoai.png"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\icons\\email.png",
+      "PackagePath": "staticwebassets\\images\\icons\\email.png"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\icons\\website.png",
+      "PackagePath": "staticwebassets\\images\\icons\\website.png"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\li-bg.png",
+      "PackagePath": "staticwebassets\\images\\li-bg.png"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\logo.png",
+      "PackagePath": "staticwebassets\\images\\logo.png"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\logo_phong_kham.png",
+      "PackagePath": "staticwebassets\\images\\logo_phong_kham.png"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\slide-b.png",
+      "PackagePath": "staticwebassets\\images\\slide-b.png"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\sliders\\phong_kham_tu_thien_kimlong_00.jpg",
+      "PackagePath": "staticwebassets\\images\\sliders\\phong_kham_tu_thien_kimlong_00.jpg"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\sliders\\phong_kham_tu_thien_kimlong_01.jpg",
+      "PackagePath": "staticwebassets\\images\\sliders\\phong_kham_tu_thien_kimlong_01.jpg"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\sliders\\phong_kham_tu_thien_kimlong_03.jpg",
+      "PackagePath": "staticwebassets\\images\\sliders\\phong_kham_tu_thien_kimlong_03.jpg"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\sliders\\phong_kham_tu_thien_kimlong_04.jpg",
+      "PackagePath": "staticwebassets\\images\\sliders\\phong_kham_tu_thien_kimlong_04.jpg"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\sliders\\phong_kham_tu_thien_kimlong_05.jpg",
+      "PackagePath": "staticwebassets\\images\\sliders\\phong_kham_tu_thien_kimlong_05.jpg"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\sliders\\phong_kham_tu_thien_kimlong_06.jpg",
+      "PackagePath": "staticwebassets\\images\\sliders\\phong_kham_tu_thien_kimlong_06.jpg"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\sliders\\phong_kham_tu_thien_kimlong_07.jpg",
+      "PackagePath": "staticwebassets\\images\\sliders\\phong_kham_tu_thien_kimlong_07.jpg"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\sliders\\phong_kham_tu_thien_kimlong_08.jpg",
+      "PackagePath": "staticwebassets\\images\\sliders\\phong_kham_tu_thien_kimlong_08.jpg"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\sliders\\phong_kham_tu_thien_kimlong_09.jpg",
+      "PackagePath": "staticwebassets\\images\\sliders\\phong_kham_tu_thien_kimlong_09.jpg"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\sliders\\phong_kham_tu_thien_kimlong_10.jpg",
+      "PackagePath": "staticwebassets\\images\\sliders\\phong_kham_tu_thien_kimlong_10.jpg"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\sliders\\phong_kham_tu_thien_kimlong_11.jpg",
+      "PackagePath": "staticwebassets\\images\\sliders\\phong_kham_tu_thien_kimlong_11.jpg"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\sliders\\phong_kham_tu_thien_kimlong_12.jpg",
+      "PackagePath": "staticwebassets\\images\\sliders\\phong_kham_tu_thien_kimlong_12.jpg"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\images\\user-hover.png",
+      "PackagePath": "staticwebassets\\images\\user-hover.png"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\Action.js",
+      "PackagePath": "staticwebassets\\js\\Action.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\Admin\\5726-d678d89665b6e8dd.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\5726-d678d89665b6e8dd.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\Admin\\7399-881c2c69295abbf2.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\7399-881c2c69295abbf2.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\Admin\\8213-34c3ed23a2198c74.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\8213-34c3ed23a2198c74.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\Admin\\_app-979549b46b89f45a.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\_app-979549b46b89f45a.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\Admin\\_buildManifest.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\_buildManifest.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\Admin\\_ssgManifest.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\_ssgManifest.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\Admin\\changelog-5b84daa3b1964549.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\changelog-5b84daa3b1964549.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\Admin\\documentation-748b3644272ec101.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\documentation-748b3644272ec101.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\Admin\\framework-3671d8951bf44e4e.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\framework-3671d8951bf44e4e.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\Admin\\index-fb493c9913e30bb0.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\index-fb493c9913e30bb0.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\Admin\\layout-vertical-28c8a752c7acf9bc.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\layout-vertical-28c8a752c7acf9bc.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\Admin\\main-5113a160e7884232.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\main-5113a160e7884232.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\Admin\\polyfills-c67a75d1b6f99dc8.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\polyfills-c67a75d1b6f99dc8.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\Admin\\tinymce.min.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\tinymce.min.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\Admin\\webpack-9e5829f83ed1b4ac.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\webpack-9e5829f83ed1b4ac.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\helix.core.js",
+      "PackagePath": "staticwebassets\\js\\helix.core.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\jquery-3.7.1.min.js",
+      "PackagePath": "staticwebassets\\js\\jquery-3.7.1.min.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\jquery-migrate-1.4.1.min.js",
+      "PackagePath": "staticwebassets\\js\\jquery-migrate-1.4.1.min.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\jquery.dataTables.min.js",
+      "PackagePath": "staticwebassets\\js\\jquery.dataTables.min.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\jquery.touchSwipe.min.js",
+      "PackagePath": "staticwebassets\\js\\jquery.touchSwipe.min.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\k2.frontend.js",
+      "PackagePath": "staticwebassets\\js\\k2.frontend.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\kenburns_script.js",
+      "PackagePath": "staticwebassets\\js\\kenburns_script.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\menu.js",
+      "PackagePath": "staticwebassets\\js\\menu.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\modernizr-2.6.2.min.js",
+      "PackagePath": "staticwebassets\\js\\modernizr-2.6.2.min.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\script.js",
+      "PackagePath": "staticwebassets\\js\\script.js"
+    },
+    {
+      "Id": "D:\\abc\\CharityClinic\\CharityClinic\\wwwroot\\js\\wow.js",
+      "PackagePath": "staticwebassets\\js\\wow.js"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.CharityClinic.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.build.CharityClinic.props",
+      "PackagePath": "build\\CharityClinic.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.CharityClinic.props",
+      "PackagePath": "buildMultiTargeting\\CharityClinic.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.buildTransitive.CharityClinic.props",
+      "PackagePath": "buildTransitive\\CharityClinic.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

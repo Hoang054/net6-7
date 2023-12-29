@@ -1,0 +1,220 @@
+﻿@page "/admin/danh-muc-anh/{id?}"
+
+@layout AdminLayout
+@using CharityClinic.Services;
+@using CharityClinic.Data.Model;
+@using System.Web.Helpers;
+@inject IBaseService<DanhMucImage> DanhMucImagesService
+@inject IJSRuntime JS
+@inject ILogger<DanhMucImageAdmin> Logger
+@inject IHostEnvironment Environment
+@if (!string.IsNullOrEmpty(message))
+{
+    <div class="col-12" style="color: limegreen;">
+        @message
+    </div>
+}else{
+@if (string.IsNullOrEmpty(id))
+{
+    <h3>Create Danh mục Hình Ảnh</h3>
+}
+else
+{
+    <h3>Update Danh mục Hình Ảnh</h3>
+    
+}
+@*<EditForm Model="DanhMucImage" OnValidSubmit="CreateNews">*@
+<form action="javascript:void(0);">
+    @if (DanhMucImage.Title == "")
+    {
+        <div class="col-12" style="color: red;">
+            The Tiltle field is required.
+        </div>
+    }
+    @if (imagePath == "")
+    {
+        <div class="col-12" style="color: red;">
+            The Image field is required.
+        </div>
+    }
+    @if (successCreate > 0 && string.IsNullOrEmpty(id))
+    {
+        <div class="col-12" style="color: limegreen;">
+            Tạo Bản Tin thành công.
+        </div>
+    }
+    else if (successCreate > 0 && !string.IsNullOrEmpty(id))
+    {
+        <div class="col-12" style="color: limegreen;">
+            Update Bản Tin thành công.
+        </div>
+    }
+    <div class="form-group">
+        <label>Title</label>
+        <input @bind="DanhMucImage.Title" class="form-control" />
+        <label>Image</label>
+        @*<input accept="image/*" type='file' id="file-input" />*@
+
+        @if (errorMaxSize)
+        {
+            <div class="col-12" style="color: red;">
+                The Image too large.
+            </div>
+        }
+        <InputFile OnChange="@LoadFiles" id="file-input" accept="image/*" class="form-control" />
+        <div class="result">
+            <img id="img-preview" src="@imagePath" alt="image" style="height: 200px;" />
+        </div>
+        <span asp-validation-for="Content"></span>
+    </div>
+
+        @if(string.IsNullOrEmpty(id))
+        {
+            <button class="btn btn-primary" @onclick="CreateNews">
+                    Create
+            </button>
+        }
+        else
+        {
+            <button class="btn btn-primary" @onclick="CreateNews">
+                Update
+            </button>
+        }
+    </form>}
+@*</EditForm>*@
+@code {
+    [Parameter]
+    public string? id { get; set; }
+    private DanhMucImage DanhMucImage = new();
+    private int successCreate = 0;
+    private string message = "";
+    private string imagePath = null;
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("LoadImage");
+            if (!string.IsNullOrEmpty(id))
+            {
+                DanhMucImage = await DanhMucImagesService.Get(id);
+                if(DanhMucImage != null)
+                {
+                    imagePath = DanhMucImage.PathImg;
+                    
+                }
+                else
+                {
+                    message = "Id không tồn tại";
+                }
+                StateHasChanged();
+            }
+        }
+        catch
+        {
+
+        }
+    }
+    private async Task CreateNews()
+    {
+        try
+        {
+            DanhMucImage.Id = 0;
+            DanhMucImage.PathImg = imagePath;
+            if (string.IsNullOrEmpty(DanhMucImage.Title))
+            {
+                DanhMucImage.Title = "";
+            }
+            if (string.IsNullOrEmpty(imagePath))
+            {
+                imagePath = "";
+            }
+
+            if (!string.IsNullOrEmpty(DanhMucImage.Title) && !string.IsNullOrEmpty(imagePath))
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    DanhMucImage.TimeCreate = DateTime.Now;
+                    successCreate = await DanhMucImagesService.Create(DanhMucImage);
+                }
+                else
+                {
+                    DanhMucImage.Id = int.Parse(id);
+                    successCreate = await DanhMucImagesService.Update(DanhMucImage);
+                }
+            }
+            StateHasChanged();
+        }
+        catch(Exception e)
+        {
+
+        }
+    }
+    private List<IBrowserFile> loadedFiles = new();
+    private int maxAllowedFiles = 1;
+    private long maxFileSize = 10 * 1024 * 1024;
+    private bool errorMaxSize = false;
+
+    private async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        errorMaxSize = false;
+        loadedFiles.Clear();
+        try
+        {
+            foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
+            {
+                var trustedFileNameForFileStorage = Path.GetRandomFileName();
+                var path = Path.Combine(Environment.ContentRootPath, "wwwroot", "DanhMucImage");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                try
+                {
+                    if (!string.IsNullOrEmpty(id))
+                    {
+                        if (File.Exists(Path.Combine(path, id + ".jpg")))
+                        {
+                            File.Delete(Path.Combine(path, id + ".jpg"));
+                        }
+                        await using FileStream fs = new(Path.Combine(path, id + ".jpg"), FileMode.Create);
+                        imagePath = Path.Combine("DanhMucImage", id + ".jpg");
+                        await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+                        loadedFiles.Add(file);
+                        fs.Close();
+                    }
+                    else
+                    {
+                        var DanhMucImage = (await DanhMucImagesService.GetAll());
+                        var nextId = 1;
+                        if(DanhMucImage.Count() > 0)
+                            nextId = DanhMucImage.OrderByDescending(d => d.Id).FirstOrDefault().Id + 1;
+                        if (File.Exists(Path.Combine(path, nextId + ".jpg")))
+                        {
+                            File.Delete(Path.Combine(path, nextId + ".jpg"));
+                        }
+                        await using FileStream fs = new(Path.Combine(path, nextId + ".jpg"), FileMode.Create);
+                        imagePath = Path.Combine("DanhMucImage", nextId + ".jpg");
+                        await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+                        loadedFiles.Add(file);
+                        fs.Close();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    errorMaxSize = true;
+                    imagePath = "";
+                    Logger.LogError("File: {Filename} Error: {Error}",
+                        file.Name, ex.Message);
+                    StateHasChanged();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            
+            throw;
+        }
+
+    }
+}

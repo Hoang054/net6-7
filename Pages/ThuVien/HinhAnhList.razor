@@ -1,0 +1,263 @@
+﻿@page "/thu-vien/hinh-anhs/{id?}"
+@using CharityClinic.Data.Model;
+@using CharityClinic.Services;
+@using Microsoft.AspNetCore.Mvc;
+@inject IJSRuntime JS
+@inject IBaseService<Image> imagesService;
+@inject IBaseService<DanhMucImage> danhMucImagesService;
+@inject IHostEnvironment Environment
+
+
+
+<section id="sp-breadcrumb-wrapper">
+    <div class="container">
+        <div class="row-fluid fadeInDown animated" id="breadcrumb" style="visibility: visible;">
+            <div id="sp-breadcrumb" class="span12">
+                <ul class="breadcrumb ">
+                    <li class="active"><span><i class="icon-map-marker hasTooltip" title="You are here: "></i></span></li>
+                    <li><a href="/vi/" class="pathway">Home</a><span>/</span></li>
+                    <li><span>Thư Viện</span></li>
+                    <li><span>/</span><span>Hình ảnh</span></li>
+                    <li><span>/</span><span>Thư Viện</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+                <section id="sp-component-wrapper">
+                    <div id="sp-component">
+                        <div id="system-message-container">
+                        </div>
+                        <div id="phocagallery" class="pg-category-view pg-cv">
+                            <div class="page-header"><h1>@Title</h1></div><div id="pg-icons"></div><div style="clear:both"></div><div id="pg-msnr-container" class="pg-msnr-container">
+                                @for (int i = 0; i < images.Count; i++)
+                                {
+                                    <div class="items-row cols-2 row-0 row-fluid clearfix fadeInDown animated" style="visibility: visible;">
+                                        <div class="span6">
+                                            <div class="item column-1">
+                                                <article class="post-119 post hentry status-publish category-tin-tuc-phong-kham">
+                                                    <div class="entry-meta muted clearfix">
+                                                        <time class="create-date" datetime="2023-10-13 10:21:32">
+                                                            <i class="icon-time"></i>
+                                                            @images[i].TimeCreate
+                                                        </time>
+                                                    </div>
+                                                    <section class="entry-content media">
+                                                        <div class="pull-left">
+                                                            <img class="introtext-image" src="@images[i].PathImg" alt="">
+                                                        </div>
+                                                        <p>@Title</p>
+                                                    </section>
+                                                    <div class="pg-box-img-bottom">
+                                                        <div class="pg-cv-name">@Title</div>
+                                                        <div class="pg-icon-detail">
+                                                            @{
+                                                                var path = images[i].PathImg;
+                                                            }
+                                                            @*<a class="phocagallerycboxplusi" title="@Title" href="javascript:void(0)" @onclick=@(e => DownloadFileFromStream(path)) rel="phocagallerycboxplusi">
+                                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                                            </a>*@
+                                                            <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="show" href="javascript:void(0)" @onclick=@(e => ChangeId(path))>
+                                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                                            </a>
+                                                            <a title="Download" href="javascript:void(0)" @onclick=@(e => DownloadFileFromStream(path))>
+                                                                <i class="fa-solid fa-download"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div class="ph-cb"></div>
+                                                    </div>
+                                                    <style type="text/css">
+                                                        .embed-responsive {
+                                                            position: relative;
+                                                            display: block;
+                                                            height: 0;
+                                                            padding: 0;
+                                                            overflow: hidden;
+                                                        }
+
+                                                        .embed-responsive-16by9 {
+                                                            padding-bottom: 56.25%;
+                                                        }
+
+                                                        .embed-responsive .embed-responsive-item,
+                                                        .embed-responsive embed, .embed-responsive iframe,
+                                                        .embed-responsive object, .embed-responsive video {
+                                                            position: absolute;
+                                                            top: 0;
+                                                            bottom: 0;
+                                                            left: 0;
+                                                            width: 100%;
+                                                            height: 100%;
+                                                            border: 0;
+                                                        }
+                                                    </style>
+                                                    <footer class="entry-meta">
+                                                    </footer>
+                                                </article>
+                                            </div>
+                                            <!-- end item -->
+                                        </div>
+                                        @if (i != images.Count - 1)
+                                        {
+                                            { i++; }
+                                            <!-- end span -->
+                                            <div class="span6">
+                                                <div class="item column-2">
+                                                    <article class="post-117 post hentry status-publish category-tin-tuc-phong-kham">
+                                                        <div class="entry-meta muted clearfix">
+                                                            <time class="create-date" datetime="2023-10-01 02:51:10">
+                                                                <i class="icon-time"></i>
+                                                                @images[i].TimeCreate
+                                                            </time>
+                                                        </div>
+                                                        <section class="entry-content media">
+                                                            <div class="pull-left">
+                                                                <img class="introtext-image" src="@images[i].PathImg" alt="">
+                                                            </div>
+                                                            <p>@Title</p>
+                                                        </section>
+                                                        <div class="pg-box-img-bottom">
+                                                            <div class="pg-cv-name">@Title</div>
+                                                            <div class="pg-icon-detail">
+                                                                @{
+                                                                    var path1 = images[i].PathImg;
+                                                                }
+                                                <a data-bs-toggle="modal" data-bs-target="#exampleModal" title="show" href="javascript:void(0)" @onclick=@(e => ChangeId(path1))>
+                                                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                                                </a>
+                                                                <a title="Download" href="javascript:void(0)" @onclick=@(e => DownloadFileFromStream(path1))>
+                                                                    <i class="fa-solid fa-download"></i>
+                                                                </a>
+                                                            </div>
+                                                            <div class="ph-cb"></div>
+                                                        </div>
+                                                        <style type="text/css">
+                                                            .embed-responsive {
+                                                                position: relative;
+                                                                display: block;
+                                                                height: 0;
+                                                                padding: 0;
+                                                                overflow: hidden;
+                                                            }
+
+                                                            .embed-responsive-16by9 {
+                                                                padding-bottom: 56.25%;
+                                                            }
+
+                                                            .embed-responsive .embed-responsive-item,
+                                                            .embed-responsive embed, .embed-responsive iframe,
+                                                            .embed-responsive object, .embed-responsive video {
+                                                                position: absolute;
+                                                                top: 0;
+                                                                bottom: 0;
+                                                                left: 0;
+                                                                width: 100%;
+                                                                height: 100%;
+                                                                border: 0;
+                                                            }
+                                                        </style>
+                                                        <footer class="entry-meta">
+                                                        </footer>
+                                                    </article>
+                                                </div>
+                                                <!-- end item -->
+                                            </div>
+                                            <!-- end span -->
+                                        }
+                                    </div>
+                                    <!-- end row -->
+                                    
+                                }
+
+                            </div>
+                            <div class="pagination">
+                                <p class="counter pull-right"> Page @id of @pageSize </p>
+                                <ul style="display: flex;">
+                                    @for (int i = 1; i <= pageSize; i++)
+                                    {
+                                        int page = i;
+                                        <li><a class="" href="javascript:void(0)" @onclick=@(e => WinLoad("/thu-vien/hinh-anhs/" + page))>@i</a></li>
+                                        <span>-</span>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+<div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img class="introtext-image" style="width: 100%" src="@imgagePath" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string id { get; set; } = "1";
+    public string Title { get; set; }
+    public int pageSize { get; set; } = 1;
+    public string imgagePath { get; set; }
+    public List<Image> images = new List<Image>();
+
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            var allPage = await imagesService.Gets(int.Parse(id));
+            var Title = (await danhMucImagesService.Get(id ?? "1")).Title;
+            pageSize = Convert.ToInt16(Math.Ceiling((decimal)allPage.Count() / (decimal)6));
+            images = allPage.OrderByDescending(d => d.Id).Skip((int.Parse(id ?? "1") - 1) * 6).Take(6).ToList();
+            StateHasChanged();
+            await JS.InvokeVoidAsync("DataTable");
+        }
+        catch
+        {
+
+        }
+    }
+    private async void WinLoad(string url)
+    {
+        await JS.InvokeVoidAsync("WinLoad", url);
+    }
+
+    private Stream GetFileStream(string? path)
+    {
+        string filePath = Path.Combine(Environment.ContentRootPath, "wwwroot", path);
+
+        // Open the file stream
+        return File.Open(filePath, FileMode.Open);
+    }
+
+    private async Task DownloadFileFromStream(string? path)
+    {
+        var fileStream = GetFileStream(path);
+        var fileName = Guid.NewGuid().ToString() + ".jpg";
+        using var streamRef = new DotNetStreamReference(fileStream);
+
+        await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
+        fileStream.Close();
+    }
+
+    private async Task ChangeId(string imgagePath)
+    {
+        this.imgagePath = imgagePath;
+        StateHasChanged();
+        await JS.InvokeVoidAsync("hiddenBackDrop");
+    }
+}

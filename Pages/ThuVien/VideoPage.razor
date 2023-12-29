@@ -1,0 +1,138 @@
+﻿@page "/thu-vien/video/{number?}"
+@using CharityClinic.Data.Model;
+@using CharityClinic.Services;
+@inject IJSRuntime JS
+@inject IBaseService<Video> videosService;
+<section id="sp-breadcrumb-wrapper">
+    <div class="container">
+        <div class="row-fluid fadeInDown animated" id="breadcrumb" style="visibility: visible;">
+            <div id="sp-breadcrumb" class="span12">
+                <ul class="breadcrumb ">
+                    <li class="active"><span><i class="icon-map-marker hasTooltip" title="You are here: "></i></span></li>
+                    <li><a href="/" class="pathway">Home</a><span>/</span></li>
+                    <li><span>Thư Viện</span></li>
+                    <li><span>/</span><span>Video</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+                <section id="sp-component-area-wrapper" class=" ">
+                    <div class="row-fluid fadeInDown animated" id="component-area" style="visibility: visible;">
+                        <div id="sp-component-area" class="span12">
+                            <section id="sp-component-wrapper">
+                                <div id="sp-component">
+                                    <div id="system-message-container">
+                                    </div>
+                                    <section class="blog ">
+                                        <section class="category-desc media">
+                                            <div class="page-header">
+                                                <h1>
+                                                    Video
+                                                </h1>
+                                            </div>
+                                        </section>
+                                        <div class="items-row cols-3 row-0 row-fluid clearfix fadeInDown animated" style="visibility: visible;">
+                                                @for (int i = 0; i < videos.Count; i++)
+                                                {
+                                                <div class="span3">
+                                                    <div class="item column-1">
+                                                        <article class="post-100 post hentry status-publish category-video">
+                                                            <header class="entry-header">
+                                                                <h2 class="entry-title">
+                                                                    <a href="/thu-vien/video/detail/@videos[i].Id" rel="bookmark" title="@videos[i].Title">
+                                                                        @videos[i].Title
+                                                                    </a>
+                                                                </h2>
+                                                            </header>
+                                                            <div class="entry-meta muted clearfix">
+                                                                <time class="create-date" datetime="2023-07-08 09:35:15">
+                                                                    <i class="icon-time"></i>
+                                                                    @videos[i].TimeCreate
+                                                                </time>
+                                                            </div>
+                                                            <section class="entry-content media">
+                                                                <div class="shortcode-video embed-responsive embed-responsive-16by9">
+                                                                    @((MarkupString)videos[i].LinkYouTube)
+                                                                </div>
+                                                                <style type="text/css">
+                                                                    .embed-responsive {
+                                                                        position: relative;
+                                                                        display: block;
+                                                                        height: 0;
+                                                                        padding: 0;
+                                                                        overflow: hidden;
+                                                                    }
+
+                                                                    .embed-responsive-16by9 {
+                                                                        padding-bottom: 56.25%;
+                                                                    }
+
+                                                                    .embed-responsive .embed-responsive-item,
+                                                                    .embed-responsive embed, .embed-responsive iframe,
+                                                                    .embed-responsive object, .embed-responsive video {
+                                                                        position: absolute;
+                                                                        top: 0;
+                                                                        bottom: 0;
+                                                                        left: 0;
+                                                                        width: 100%;
+                                                                        height: 100%;
+                                                                        border: 0;
+                                                                    }
+                                                                </style>
+                                                                <p></p>
+                                                            </section>
+                                                            <footer class="entry-meta">
+                                                            </footer>
+                                                        </article>
+                                                    </div>
+                                                    <!-- end item -->
+                                                </div>
+                                                <!-- end span -->
+                                                }
+                                        </div>
+                                        <!-- end row -->
+                                        
+                                            <div class="pagination">
+                                                <p class="counter pull-right"> Page @number of @pageSize </p>
+                                                <ul style="display: flex;">
+                                                    @for (int i = 1; i <= pageSize; i++)
+                                                    {
+                                                        int page = i;
+                                                        <li><a class="" href="javascript:void(0)" @onclick=@(e => WinLoad("/thu-vien/vdieo/" + page))>@i</a></li>
+                                                        <span>-</span>
+                                                    }
+                                                </ul>
+                                            </div>
+                                    </section>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </section>
+@code {
+    [Parameter]
+    public string number { get; set; } = "1";
+    public int pageSize { get; set; } = 1;
+    public List<Video> videos = new List<Video>();
+
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            var allPage = await videosService.GetAll();
+            pageSize = Convert.ToInt16(Math.Ceiling((decimal)allPage.Count() / (decimal)6));
+            videos = allPage.OrderByDescending(d => d.Id).Skip((int.Parse(number ?? "1") - 1) * 6).Take(6).ToList();
+            StateHasChanged();
+        }
+        catch
+        {
+
+        }
+    }
+    private async void WinLoad(string url)
+    {
+        await JS.InvokeVoidAsync("WinLoad", url);
+    }
+
+}

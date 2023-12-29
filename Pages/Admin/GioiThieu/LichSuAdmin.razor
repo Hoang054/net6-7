@@ -1,0 +1,192 @@
+﻿@page "/admin/lich-su/{id?}"
+
+@layout AdminLayout
+@using CharityClinic.Services;
+@using CharityClinic.Data.Model;
+@using System.Web.Helpers;
+@inject IBaseService<LichSu> LichSuService
+@inject IJSRuntime JS
+@inject ILogger<LichSuAdmin> Logger
+@inject IHostEnvironment Environment
+
+@if (string.IsNullOrEmpty(id))
+{
+    <h3>Create Lịch Sử</h3>
+}
+else
+{
+    <h3>Update Lịch Sử</h3>
+    
+}
+<form action="javascript:void(0);">
+    @if (LichSu.Content == "")
+    {
+        <div class="col-12" style="color: red;">
+            The Content field is required.
+        </div>
+    }
+    @if (LichSu.Year == "")
+    {
+        <div class="col-12" style="color: red;">
+            The Year field is required.
+        </div>
+    }
+    @if (successCreate > 0 && string.IsNullOrEmpty(id))
+    {
+        <div class="col-12" style="color: limegreen;">
+            Tạo Lịch Sử thành công.
+        </div>
+    }
+    else if (successCreate > 0 && !string.IsNullOrEmpty(id))
+    {
+        <div class="col-12" style="color: limegreen;">
+            Update Lịch Sử thành công.
+        </div>
+    }
+    <div class="form-group">
+        <label>Year</label>
+        <input @bind="LichSu.Year" class="form-control" />
+
+        <label>Content</label>
+        <textarea id="Content" @bind="LichSu.Content" class="form-control" />
+        <span asp-validation-for="Content"></span>
+    </div>
+
+        @if(string.IsNullOrEmpty(id))
+        {
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled="@IsDisabled" @onclick="CreateNews">
+            @if (IsDisabled)
+            {
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            }
+            Create
+            </button>
+        }
+        else
+        {
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled="@IsDisabled" @onclick="CreateNews">
+            @if (IsDisabled)
+            {
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            }
+            Update
+            </button>
+        }
+    </form>
+@*</EditForm>*@
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-Year fs-5" id="exampleModalLabel">Thông báo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if (IsDisabled)
+                {
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                }
+                else
+                {
+                    @if (successCreate > 0 && string.IsNullOrEmpty(id))
+                    {
+                        <div class="col-12" style="color: limegreen;">
+                            Tạo thành công.
+                        </div>
+                    }
+                    else if (successCreate > 0 && !string.IsNullOrEmpty(id))
+                    {
+                        <div class="col-12" style="color: limegreen;">
+                            Update thành công.
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-12" style="color: red;">
+                            Update or Create không thành công.
+                        </div>
+                    }
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string? id { get; set; }
+    private LichSu LichSu = new();
+    private int successCreate = 0;
+    public bool IsDisabled { get; set; }
+    protected async override void OnInitialized()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("import", "./js/admin/tinymce.min.js");
+            if (!string.IsNullOrEmpty(id))
+            {
+                var path = Path.Combine("LichSuContent", id);
+                await JS.InvokeVoidAsync("init", path);
+
+            }
+            else
+            {
+                var ChamSoc = (await LichSuService.GetAll());
+                var nextId = 1;
+                if (ChamSoc.Count() > 0)
+                    nextId = ChamSoc.OrderByDescending(d => d.Id).FirstOrDefault().Id + 1;
+                var path = Path.Combine("LichSuContent", nextId.ToString());
+                await JS.InvokeVoidAsync("init", path);
+
+            }
+            await JS.InvokeVoidAsync("LoadImage");
+            if (!string.IsNullOrEmpty(id))
+            {
+                LichSu = await LichSuService.Get(id);
+                if (!string.IsNullOrEmpty(LichSu.Content))
+                    await JS.InvokeAsync<string>("setContent", LichSu.Content);
+                StateHasChanged();
+            }
+        }
+        catch
+        {
+
+        }
+    }
+    private async Task CreateNews()
+    {
+        try
+        {
+            IsDisabled = true;
+            LichSu.Id = 0;
+            LichSu.Content = await JS.InvokeAsync<string>("getContent", null);
+            if (string.IsNullOrEmpty(LichSu.Year))
+            {
+                LichSu.Year = "";
+            }
+
+            if (!string.IsNullOrEmpty(LichSu.Content) && !string.IsNullOrEmpty(LichSu.Year))
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    LichSu.TimeCreate = DateTime.Now;
+                    successCreate = await LichSuService.Create(LichSu);
+                }
+                else
+                {
+                    LichSu.Id = int.Parse(id);
+                    successCreate = await LichSuService.Update(LichSu);
+                }
+            }
+            IsDisabled = false;
+            StateHasChanged();
+        }
+        catch(Exception e)
+        {
+
+        }
+    }
+}

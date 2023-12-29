@@ -1,0 +1,106 @@
+﻿@page "/thu-vien/video/detail/{id?}"
+@using CharityClinic.Data.Model;
+@using CharityClinic.Pages.Admin;
+@using CharityClinic.Services;
+@using Microsoft.AspNetCore.Html;
+@inject IJSRuntime JS
+@inject IBaseService<Video> videosService;
+
+<section id="sp-breadcrumb-wrapper">
+    <div class="container">
+        <div class="row-fluid fadeInDown animated" id="breadcrumb" style="visibility: visible;">
+            <div id="sp-breadcrumb" class="span12">
+                <ul class="breadcrumb ">
+                    <li class="active"><span><i class="icon-map-marker hasTooltip" title="You are here: "></i></span></li>
+                    <li><a href="/" class="pathway">Home</a><span>/</span></li>
+                    <li><span>Thư Viện</span></li>
+                    <li><span>/</span><span>Video</span></li>
+                    <li><span>/</span><span>@Tiltle</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<header class="entry-header">
+    <div class="page-header">
+        <h1 class="entry-title">
+            <a href="#">
+                @Tiltle
+            </a>
+        </h1>
+    </div>
+</header>
+<div class="entry-meta muted clearfix">
+    <time class="create-date" datetime="2023-11-17 09:29:47">
+        @TimeCreate
+    </time>
+</div>
+
+<section class="entry-content media">
+    <div class="shortcode-video embed-responsive embed-responsive-16by9">
+        @if(@videos != null)
+        {
+            @((MarkupString)videos.LinkYouTube)
+        }
+    </div>
+    <style type="text/css">
+        .embed-responsive {
+            position: relative;
+            display: block;
+            height: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .embed-responsive-16by9 {
+            padding-bottom: 56.25%;
+        }
+
+        .embed-responsive .embed-responsive-item,
+        .embed-responsive embed, .embed-responsive iframe,
+        .embed-responsive object, .embed-responsive video {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</section>
+
+@code {
+    [Parameter]
+    public string? id { get; set; }
+    public Video? videos = new Video();
+    public string Content { get; set; }
+    public string Tiltle { get; set; }
+    public DateTime TimeCreate { get; set; }
+
+    protected override async void OnInitialized()
+    {
+        try
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                videos = await videosService.Get(id);
+                if(videos == null)
+                {
+                    Content = "Video không tồn tại";
+                }
+                else
+                {
+                    Tiltle = videos.Title;
+                    TimeCreate = videos.TimeCreate;
+                }
+                StateHasChanged();
+            }
+        }
+        catch
+        {
+
+        }
+    }
+
+}
